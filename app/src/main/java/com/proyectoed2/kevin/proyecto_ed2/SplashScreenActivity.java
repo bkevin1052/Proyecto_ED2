@@ -29,6 +29,6 @@ public class SplashScreenActivity extends Activity {
 
         Titulo.setAnimation(animation);
 
-        new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), LoginActivity.class)), 3500);
+        new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), LoginActivity.class)), 3000);
     }
 }
