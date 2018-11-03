@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    android:background="#E6B783">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="56dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
+
+        <com.mikhaellopez.circularfillableloaders.CircularFillableLoaders
+            android:id="@+id/logoImagen"
+            android:layout_width="136dp"
+            android:layout_height="95dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="28dp"
+            android:layout_marginLeft="120dp"
+            android:src="@drawable/iconosplash"
+            app:cfl_border="true"
+            app:cfl_border_width="2dp"
+            app:cfl_progress="80"
+            app:cfl_wave_amplitude="0.06"
+            app:cfl_wave_color="#3f51b5" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/txtUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#3f51b5"
+                android:textColorHint="#3f51b5"
+                android:textColorHighlight="#3f51b5"
+                android:inputType="textEmailAddress"
+                android:hint="Nombre de usuario" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/txtContrasenia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#3f51b5"
+                android:inputType="textPassword"
+                android:textColorHint="#3f51b5"
+                android:textColorHighlight="#3f51b5"
+                android:hint="Contraseña"/>
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnIniciarSesion"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:background="@color/Frame"
+            android:padding="12dp"
+            android:textColor="#3f51b5"
+            android:text="Iniciar Sesion"/>
+
+        <TextView android:id="@+id/lblRegistrar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="¿Aun no eres un miembro? Registrate"
+            android:textColor="#3f51b5"
+            android:textColorHighlight="#3f51b5"
+            android:gravity="center"
+            android:textSize="16dip"/>
+
+    </LinearLayout>
+</ScrollView>

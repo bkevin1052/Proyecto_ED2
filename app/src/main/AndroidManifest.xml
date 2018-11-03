@@ -9,20 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".ChatActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".MensajeActivity"
-            android:label="Mensajes"/>
-        <activity
-            android:name=".SplashScreenActivity">
+        <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ChatActivity"
+            android:label="Duck Chats" />
+        <activity
+            android:name=".MensajeActivity"
+            android:label="Mensajes" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="Log In" />
+        <activity android:name=".RegistroActivity"
+            android:label="Registro"></activity>
     </application>
 
 </manifest>

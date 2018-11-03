@@ -5,14 +5,17 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mikhaellopez.circularfillableloaders.CircularFillableLoaders;
+
 public class SplashScreenActivity extends Activity {
 
-    ImageView imagen;
+    CircularFillableLoaders imagen;
     TextView Titulo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +23,12 @@ public class SplashScreenActivity extends Activity {
         setContentView(R.layout.activity_splash_screen);
 
         Titulo = (TextView) findViewById(R.id.titulo);
-        imagen = (ImageView) findViewById(R.id.logoImagen);
+        imagen = (CircularFillableLoaders) findViewById(R.id.logoImagen);
 
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.animacion);
 
         Titulo.setAnimation(animation);
-        imagen.setAnimation(animation);
-        new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), ChatActivity.class)), 2500);
+
+        new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), LoginActivity.class)), 3500);
     }
 }
