@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/small_layout_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/smsImage"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_margin="@dimen/margin_imageview"
+        android:src="@drawable/ic_contacts_black_24dp" />
+
+    <TextView
+        android:id="@+id/nombreContacto"
+        android:layout_width="241dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="69dp"
+        android:layout_marginRight="@dimen/margin_imageview"
+        android:layout_marginTop="@dimen/margin_sender"
+        android:layout_toRightOf="@id/smsImage"
+        android:text="Persona"
+        android:textAllCaps="true"
+        android:textColor="@color/black" />
+
+</RelativeLayout>
