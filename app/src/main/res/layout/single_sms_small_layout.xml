@@ -22,7 +22,20 @@
         android:layout_marginRight="@dimen/margin_imageview"
         android:layout_marginTop="@dimen/margin_sender"
         android:layout_toRightOf="@id/smsImage"
-        android:text="Persona"
+        android:text="PERSONA"
+        android:textAllCaps="true"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/ultimoMensaje"
+        android:layout_width="241dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="69dp"
+        android:layout_marginRight="@dimen/margin_imageview"
+        android:layout_below="@+id/nombreContacto"
+        android:layout_marginTop="@dimen/margin_sender"
+        android:layout_toRightOf="@id/smsImage"
+        android:text="Ultimo Mensaje"
         android:textAllCaps="true"
         android:textColor="@color/black" />
 
