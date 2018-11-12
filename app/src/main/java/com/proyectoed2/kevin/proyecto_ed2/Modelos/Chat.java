@@ -6,10 +6,10 @@ public class Chat {
 
     private String nombre;
     private String ultimoMensaje;
-    private ArrayList<Mensaje> listaMensajes;
+    public ArrayList<Mensaje> listaMensajes;
 
     public Chat(){
-
+            listaMensajes = new ArrayList<>();
     }
 
     public String getNombre() {
@@ -28,11 +28,4 @@ public class Chat {
         this.ultimoMensaje = ultimoMensaje;
     }
 
-    public ArrayList<Mensaje> getListaMensajes() {
-        return listaMensajes;
-    }
-
-    public void setListaMensajes(ArrayList<Mensaje> listaMensajes) {
-        this.listaMensajes = listaMensajes;
-    }
 }

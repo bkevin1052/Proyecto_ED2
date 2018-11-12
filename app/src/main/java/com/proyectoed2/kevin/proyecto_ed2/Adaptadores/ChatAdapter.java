@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.proyectoed2.kevin.proyecto_ed2.Modelos.Chat;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Usuario;
 import com.proyectoed2.kevin.proyecto_ed2.R;
 
@@ -17,13 +18,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ListaChatViewH
 
 
     private Context miContexto;
-    private ArrayList<Usuario> listasUsuario;
+    private ArrayList<Chat> listaChats;
     private View.OnClickListener listener;
 
 
-    public ChatAdapter(Context miContexto, ArrayList<Usuario> listasUsuario) {
+    public ChatAdapter(Context miContexto, ArrayList<Chat> listaChats) {
         this.miContexto = miContexto;
-        this.listasUsuario = listasUsuario;
+        this.listaChats = listaChats;
     }
 
     @Override
@@ -38,14 +39,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ListaChatViewH
     @Override
     public void onBindViewHolder(@NonNull ListaChatViewHolder holder, int position) {
 
-        Usuario seleccion = listasUsuario.get(position);
-        holder.textViewNombre.setText(seleccion.getUserName());
-        holder.textViewUltimoMensaje.setText(seleccion.getUltimoMensaje().getMensaje());
+        Chat seleccion = listaChats.get(position);
+        holder.textViewNombre.setText(seleccion.getNombre());
+        holder.textViewUltimoMensaje.setText(seleccion.getUltimoMensaje());
     }
 
     @Override
     public int getItemCount() {
-        return listasUsuario.size();
+        return listaChats.size();
     }
 
     class ListaChatViewHolder extends RecyclerView.ViewHolder{
