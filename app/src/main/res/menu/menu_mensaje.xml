@@ -2,13 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:title="Document"
         android:id="@+id/menu_adjuntar"
         android:icon="@drawable/ic_attachment"
-        android:title="Documento" />
+        />
 
     <item
+        android:title="Image"
         android:id="@+id/menu_imagen"
-        android:icon="@drawable/ic_image"
-        android:title="Imagen" />
+        android:icon="@drawable/ic_image" />
 
 </menu>
