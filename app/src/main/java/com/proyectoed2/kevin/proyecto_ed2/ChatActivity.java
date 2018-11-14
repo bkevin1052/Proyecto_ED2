@@ -12,6 +12,7 @@ import com.hlab.fabrevealmenu.view.FABRevealMenu;
 
 public class ChatActivity extends AppCompatActivity implements OnFABMenuSelectedListener {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -2,6 +2,8 @@ package com.proyectoed2.kevin.proyecto_ed2.Modelos;
 
 import android.media.Image;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.File;
 
 public class Mensaje {
@@ -10,10 +12,9 @@ public class Mensaje {
     private String mensaje;
     private File documento;
     private Image imagen;
+    @SerializedName("_id")
+    private String mId;
 
-    public Mensaje(){
-
-    }
 
     public String getNombre() {
         return nombre;
@@ -45,5 +46,13 @@ public class Mensaje {
 
     public void setImagen(Image imagen) {
         this.imagen = imagen;
+    }
+
+    public String getmId() {
+        return mId;
+    }
+
+    public void setmId(String mId) {
+        this.mId = mId;
     }
 }

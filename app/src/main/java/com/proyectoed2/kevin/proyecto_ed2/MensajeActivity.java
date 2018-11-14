@@ -14,9 +14,14 @@ import com.hlab.fabrevealmenu.view.FABRevealMenu;
 import com.proyectoed2.kevin.proyecto_ed2.Adaptadores.MensajesAdapter;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Chat;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Mensaje;
+import com.proyectoed2.kevin.proyecto_ed2.Network.BackendClient;
+import com.proyectoed2.kevin.proyecto_ed2.Network.NetworkCall;
 import com.stfalcon.chatkit.messages.MessageInput;
 
-import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MensajeActivity extends AppCompatActivity implements OnFABMenuSelectedListener {
 
@@ -37,7 +42,7 @@ public class MensajeActivity extends AppCompatActivity implements OnFABMenuSelec
         fabMenu.setOnFABMenuSelectedListener(this);
 
         nuevoMensaje = (MessageInput)findViewById(R.id.nuevoMensaje);
-        RecyclerlistaMensajes = (RecyclerView)findViewById(R.id.listaMensajes);
+        RecyclerlistaMensajes = (RecyclerView)findViewById(R.id.RecyclerListaMensajes);
         RecyclerlistaMensajes.setLayoutManager(new LinearLayoutManager(this));
 
         nuevoMensaje.setInputListener(mensaje -> {

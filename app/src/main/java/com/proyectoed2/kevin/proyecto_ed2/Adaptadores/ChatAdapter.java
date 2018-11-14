@@ -18,13 +18,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ListaChatViewH
 
 
     private Context miContexto;
-    private ArrayList<Chat> listaChats;
+    private ArrayList<Usuario> data;
     private View.OnClickListener listener;
 
 
-    public ChatAdapter(Context miContexto, ArrayList<Chat> listaChats) {
+    public ChatAdapter(Context miContexto, ArrayList<Usuario> data) {
         this.miContexto = miContexto;
-        this.listaChats = listaChats;
+        this.data = data;
     }
 
     @Override
@@ -39,14 +39,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ListaChatViewH
     @Override
     public void onBindViewHolder(@NonNull ListaChatViewHolder holder, int position) {
 
-        Chat seleccion = listaChats.get(position);
-        holder.textViewNombre.setText(seleccion.getNombre());
-        holder.textViewUltimoMensaje.setText(seleccion.getUltimoMensaje());
+        Usuario seleccion = data.get(position);
+        holder.textViewNombre.setText(seleccion.getUserName());
+        holder.textViewUltimoMensaje.setText(seleccion.getUltimoMensaje().getMensaje());
     }
 
     @Override
     public int getItemCount() {
-        return listaChats.size();
+        return data.size();
     }
 
     class ListaChatViewHolder extends RecyclerView.ViewHolder{
@@ -57,6 +57,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ListaChatViewH
             super(itemView);
             textViewNombre = itemView.findViewById(R.id.nombreContacto);
             textViewUltimoMensaje = itemView.findViewById(R.id.ultimoMensaje);
+        }
+    }
+
+    public void addAll(ArrayList<Usuario> list) {
+        if (list.size() > 0) {
+            data.clear();
+            data.addAll(list);
+            notifyDataSetChanged();
         }
     }
 

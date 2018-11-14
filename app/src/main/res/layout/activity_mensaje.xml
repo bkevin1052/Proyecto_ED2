@@ -21,8 +21,8 @@
 
     <com.hlab.fabrevealmenu.view.FABRevealMenu
         android:id="@+id/fabMenuMensaje"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"
         app:animateItems="true"
@@ -36,7 +36,7 @@
         app:showTitle="true" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/listaMensajes"
+        android:id="@+id/RecyclerListaMensajes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/btnMenuMensaje"
@@ -48,7 +48,7 @@
         android:layout_width="339dp"
         android:layout_height="93dp"
         android:layout_alignParentBottom="true"
-        android:layout_below="@id/listaMensajes"
+        android:layout_below="@id/RecyclerListaMensajes"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="-21dp"
         android:layout_alignParentEnd="true"
