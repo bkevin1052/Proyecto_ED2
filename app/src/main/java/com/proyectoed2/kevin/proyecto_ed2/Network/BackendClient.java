@@ -1,5 +1,6 @@
 package com.proyectoed2.kevin.proyecto_ed2.Network;
 
+import android.support.constraint.solver.widgets.ConstraintAnchor;
 import android.util.Base64;
 
 import com.proyectoed2.kevin.proyecto_ed2.utils.Constants;
@@ -13,18 +14,16 @@ import rx.schedulers.Schedulers;
 
 public class BackendClient {
 
-    public static final String BASE_URL = "http://192.168.1.21:3000/duckchat";
 
     public static NetworkCall getRetrofit(){
-
-        RxJavaCallAdapterFactory rxAdapter = RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io());
-
-        return new Retrofit.Builder()
+        Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
-                .addCallAdapterFactory(rxAdapter)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build().create(NetworkCall.class);
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
 
+        NetworkCall client = retrofit.create(NetworkCall.class);
+
+        return  client;
     }
 
     public static NetworkCall getRetrofit(String userName, String password) {

@@ -5,6 +5,7 @@ import com.proyectoed2.kevin.proyecto_ed2.Modelos.Response;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Usuario;
 
 
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -15,7 +16,7 @@ import rx.Observable;
 
 public interface NetworkCall {
     @POST("users")
-    Observable<Response> registro(@Body Usuario user);
+    Call<Usuario> registro(@Body Usuario user);
 
     @POST("authenticate")
     Observable<Response> logIn();

@@ -1,16 +1,23 @@
 package com.proyectoed2.kevin.proyecto_ed2.Modelos;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
 public class Usuario {
+    @SerializedName("userName")
+    @Expose
     private String userName;
+    @SerializedName("contrasenia")
+    @Expose
     private String contrasenia;
+    @SerializedName("correo")
+    @Expose
     private String Correo;
+    @SerializedName("token")
+    @Expose
     private String token;
-    private ArrayList<Chat> listaChats;
-    private ArrayList<Mensaje> listaMensajes;
 
 
     public String getUserName() {
@@ -39,27 +46,11 @@ public class Usuario {
 
 
 
-    public ArrayList<Chat> getListaChats() {
-        return listaChats;
-    }
-
-    public void setListaChats(ArrayList<Chat> listaChats) {
-        this.listaChats = listaChats;
-    }
-
     public String getToken() {
         return token;
     }
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public ArrayList<Mensaje> getListaMensajes() {
-        return listaMensajes;
-    }
-
-    public void setListaMensajes(ArrayList<Mensaje> listaMensajes) {
-        this.listaMensajes = listaMensajes;
     }
 }

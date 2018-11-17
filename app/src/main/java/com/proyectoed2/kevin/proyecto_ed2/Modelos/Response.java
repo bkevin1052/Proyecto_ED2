@@ -1,8 +1,11 @@
 package com.proyectoed2.kevin.proyecto_ed2.Modelos;
 
-public class Response {
+import com.google.gson.annotations.SerializedName;
 
+public class Response {
+    @SerializedName("message")
     private String message;
+    @SerializedName("token")
     private String token;
 
     public String getMessage() {

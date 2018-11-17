@@ -13,20 +13,19 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.proyectoed2.kevin.proyecto_ed2.Modelos.Chat;
-import com.proyectoed2.kevin.proyecto_ed2.Modelos.Mensaje;
-import com.proyectoed2.kevin.proyecto_ed2.Modelos.Response;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Usuario;
 import com.proyectoed2.kevin.proyecto_ed2.Network.BackendClient;
+import com.proyectoed2.kevin.proyecto_ed2.Network.NetworkCall;
+import com.proyectoed2.kevin.proyecto_ed2.utils.Constants;
 import com.proyectoed2.kevin.proyecto_ed2.utils.Validacion;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.HttpException;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegistroActivity extends AppCompatActivity {
 
@@ -35,10 +34,7 @@ public class RegistroActivity extends AppCompatActivity {
     private EditText userName;
     private EditText password;
     private EditText correo;
-    private String mToken;
-    private String mUserName;
-
-    private CompositeSubscription mSubscriptions;
+    Usuario user = new Usuario();
 
     TextView LogIn;
     Button CrearUsuario;
@@ -48,12 +44,10 @@ public class RegistroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
-        mSubscriptions = new CompositeSubscription();
         init();
 
         CrearUsuario.setOnClickListener(view -> {
             registrarse();
-            startActivity(new Intent(RegistroActivity.this, LoginActivity.class));
         });
 
         LogIn.setOnClickListener(view -> startActivity(new Intent(RegistroActivity.this, LoginActivity.class)));
@@ -103,7 +97,6 @@ public class RegistroActivity extends AppCompatActivity {
         }
 
         if (err == 0) {
-            Usuario user = new Usuario();
             user.setUserName(nombreUsuario);
             //EN ESTA PARTE SE CIFRA LA CONTRASEÑA
             user.setCorreo(email);
@@ -117,13 +110,25 @@ public class RegistroActivity extends AppCompatActivity {
     }
 
         private void Registro(Usuario user){
-            mSubscriptions.add(BackendClient.getRetrofit().registro(user)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(response->Response(response),error -> onError(error)));
+
+            Call<Usuario> call = BackendClient.getRetrofit().registro(user);
+
+        call.enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, retrofit2.Response<Usuario> response) {
+                mProgressbar.setVisibility(View.VISIBLE);
+                showMessage(response.message());
+                startActivity(new Intent(RegistroActivity.this, LoginActivity.class));
+            }
+
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                mProgressbar.setVisibility(View.GONE);
+                onError(t);
+            }
+        });
+
         }
-
-
 
         private void showMessage (String message){
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
@@ -136,38 +141,24 @@ public class RegistroActivity extends AppCompatActivity {
             password.setError(null);
         }
 
-        private void Response (Response response){
+        private void onError(Throwable error) {
 
-            mProgressbar.setVisibility(View.GONE);
-            showMessage(response.getMessage());
-        }
+        if (error instanceof HttpException) {
 
-        private void onError (Throwable error){
+            Gson gson = new GsonBuilder().create();
 
-            mProgressbar.setVisibility(View.GONE);
+            try {
+                String errorBody = ((HttpException) error).response().errorBody().string();
+                com.proyectoed2.kevin.proyecto_ed2.Modelos.Response response = gson.fromJson(errorBody, com.proyectoed2.kevin.proyecto_ed2.Modelos.Response.class);
+                showMessage(response.getMessage());
 
-            if (error instanceof HttpException) {
-
-                Gson gson = new GsonBuilder().create();
-
-                try {
-                    String errorBody = ((HttpException) error).response().errorBody().string();
-                    Response response = gson.fromJson(errorBody,Response.class);
-                    showMessage(response.getMessage());
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-
-                showMessage("Error de conexion !");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }
+        } else {
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mSubscriptions.unsubscribe();
+            showMessage("Error de conexion!");
+        }
     }
-    }
+}
 
