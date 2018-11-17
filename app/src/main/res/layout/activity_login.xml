@@ -31,6 +31,7 @@
             app:cfl_wave_color="#3f51b5" />
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/titleUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -47,6 +48,7 @@
 
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/titlePassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

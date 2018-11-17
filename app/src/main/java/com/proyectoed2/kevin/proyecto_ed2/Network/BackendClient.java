@@ -16,14 +16,13 @@ public class BackendClient {
 
 
     public static NetworkCall getRetrofit(){
-        Retrofit.Builder builder = new Retrofit.Builder()
+        RxJavaCallAdapterFactory rxAdapter = RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io());
+
+        return new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create());
-        Retrofit retrofit = builder.build();
-
-        NetworkCall client = retrofit.create(NetworkCall.class);
-
-        return  client;
+                .addCallAdapterFactory(rxAdapter)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build().create(NetworkCall.class);
     }
 
     public static NetworkCall getRetrofit(String userName, String password) {
@@ -75,6 +74,8 @@ public class BackendClient {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(NetworkCall.class);
     }
+
+
 
 
 }

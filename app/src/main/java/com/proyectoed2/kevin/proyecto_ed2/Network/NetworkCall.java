@@ -16,7 +16,7 @@ import rx.Observable;
 
 public interface NetworkCall {
     @POST("users")
-    Call<Usuario> registro(@Body Usuario user);
+    Observable<Response> registro(@Body Usuario user);
 
     @POST("authenticate")
     Observable<Response> logIn();
