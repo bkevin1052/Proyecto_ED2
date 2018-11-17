@@ -41,6 +41,7 @@ public class MensajesAdapter extends RecyclerView.Adapter<MensajesAdapter.ListaM
 
         Mensaje mensaje = listaMensajes.get(position);
         holder.textViewMensaje.setText(mensaje.getMensaje());
+        holder.textViewEmisor.setText(mensaje.getEmisor());
     }
 
     @Override
@@ -51,10 +52,12 @@ public class MensajesAdapter extends RecyclerView.Adapter<MensajesAdapter.ListaM
     class ListaMensajesViewHolder extends RecyclerView.ViewHolder{
 
         TextView textViewMensaje;
+        TextView textViewEmisor;
 
         public ListaMensajesViewHolder(View itemView) {
             super(itemView);
             textViewMensaje = itemView.findViewById(R.id.Mensaje);
+            textViewMensaje = itemView.findViewById(R.id.Emisor);
         }
     }
 

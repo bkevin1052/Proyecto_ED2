@@ -5,38 +5,27 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class Chat {
-    private String nombre;
-    private String ultimoMensaje;
+    private String Emisor;
+    private String Receptor;
     public ArrayList<Mensaje> listaMensajes;
-    @SerializedName("_id")
-    private String cId;
 
     public Chat(){
             listaMensajes = new ArrayList<>();
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getEmisor() {
+        return Emisor;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setEmisor(String emisor) {
+        Emisor = emisor;
     }
 
-    public String getUltimoMensaje() {
-        return ultimoMensaje;
+    public String getReceptor() {
+        return Receptor;
     }
 
-    public void setUltimoMensaje(String ultimoMensaje) {
-        this.ultimoMensaje = ultimoMensaje;
-    }
-
-
-    public String getcId() {
-        return cId;
-    }
-
-    public void setcId(String cId) {
-        this.cId = cId;
+    public void setReceptor(String receptor) {
+        Receptor = receptor;
     }
 }

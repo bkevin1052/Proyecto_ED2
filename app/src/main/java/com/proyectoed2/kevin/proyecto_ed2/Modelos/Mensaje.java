@@ -8,21 +8,12 @@ import java.io.File;
 
 public class Mensaje {
 
-    private String nombre;
+    private String Emisor;
+    private String Receptor;
     private String mensaje;
     private File documento;
     private Image imagen;
-    @SerializedName("_id")
-    private String mId;
-
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    private String extension;
 
     public String getMensaje() {
         return mensaje;
@@ -48,11 +39,27 @@ public class Mensaje {
         this.imagen = imagen;
     }
 
-    public String getmId() {
-        return mId;
+    public String getExtension() {
+        return extension;
     }
 
-    public void setmId(String mId) {
-        this.mId = mId;
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
+
+    public String getEmisor() {
+        return Emisor;
+    }
+
+    public void setEmisor(String emisor) {
+        Emisor = emisor;
+    }
+
+    public String getReceptor() {
+        return Receptor;
+    }
+
+    public void setReceptor(String receptor) {
+        Receptor = receptor;
     }
 }

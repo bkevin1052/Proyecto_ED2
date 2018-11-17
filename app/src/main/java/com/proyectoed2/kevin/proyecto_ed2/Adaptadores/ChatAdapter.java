@@ -41,7 +41,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ListaChatViewH
 
         Usuario seleccion = data.get(position);
         holder.textViewNombre.setText(seleccion.getUserName());
-        holder.textViewUltimoMensaje.setText(seleccion.getUltimoMensaje().getMensaje());
     }
 
     @Override
@@ -51,12 +50,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ListaChatViewH
 
     class ListaChatViewHolder extends RecyclerView.ViewHolder{
 
-        TextView textViewNombre,textViewUltimoMensaje;
+        TextView textViewNombre;
 
         public ListaChatViewHolder(View itemView) {
             super(itemView);
             textViewNombre = itemView.findViewById(R.id.nombreContacto);
-            textViewUltimoMensaje = itemView.findViewById(R.id.ultimoMensaje);
         }
     }
 

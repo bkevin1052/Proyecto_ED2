@@ -55,7 +55,6 @@
         android:layout_toRightOf="@+id/btnMenuMensaje"
         app:attachmentButtonDefaultIconColor="@color/colorPrimary"
         app:attachmentButtonDefaultIconPressedColor="@color/colorAccent"
-        app:inputBackground="@drawable/rounded_text"
         app:inputButtonBackground="@drawable/bubble_circle"
         app:inputButtonHeight="40dp"
         app:inputButtonIcon="@drawable/ic_send"
@@ -65,7 +64,5 @@
         app:inputMaxLines="3"
         app:inputTextColor="@color/black"
         app:inputTextSize="16sp" />
-
-
 
 </RelativeLayout>

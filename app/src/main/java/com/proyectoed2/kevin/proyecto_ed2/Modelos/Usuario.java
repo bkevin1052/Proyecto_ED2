@@ -5,14 +5,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class Usuario {
-    @SerializedName("_id")
-    private String id;
     private String userName;
     private String contrasenia;
     private String Correo;
-    private Mensaje ultimoMensaje;
+    private String token;
     private ArrayList<Chat> listaChats;
-    @SerializedName("__v")
+    private ArrayList<Mensaje> listaMensajes;
 
 
     public String getUserName() {
@@ -39,21 +37,7 @@ public class Usuario {
         Correo = correo;
     }
 
-    public Mensaje getUltimoMensaje() {
-        return ultimoMensaje;
-    }
 
-    public void setUltimoMensaje(Mensaje ultimoMensaje) {
-        this.ultimoMensaje = ultimoMensaje;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public ArrayList<Chat> getListaChats() {
         return listaChats;
@@ -61,5 +45,21 @@ public class Usuario {
 
     public void setListaChats(ArrayList<Chat> listaChats) {
         this.listaChats = listaChats;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public ArrayList<Mensaje> getListaMensajes() {
+        return listaMensajes;
+    }
+
+    public void setListaMensajes(ArrayList<Mensaje> listaMensajes) {
+        this.listaMensajes = listaMensajes;
     }
 }
