@@ -6,8 +6,8 @@
         android:color="@color/dark_two" />
     <corners android:radius="10dip" />
     <padding
-        android:bottom="2dip"
-        android:left="2dip"
-        android:right="2dip"
-        android:top="2dip" />
+        android:bottom="10dip"
+        android:left="10dip"
+        android:right="10dip"
+        android:top="10dip" />
 </shape>

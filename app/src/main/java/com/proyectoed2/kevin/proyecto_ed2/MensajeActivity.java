@@ -26,11 +26,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MensajeActivity extends AppCompatActivity implements OnFABMenuSelectedListener {
+public class MensajeActivity extends AppCompatActivity{
 
     private SharedPreferences mSharedPreferences;
-    private FloatingActionButton fabMensaje;
-    private FABRevealMenu fabMenu;
     RecyclerView RecyclerlistaMensajes;
     MensajesAdapter adapterMensajes;
     Chat nuevoChat = new Chat();
@@ -40,8 +38,6 @@ public class MensajeActivity extends AppCompatActivity implements OnFABMenuSelec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mensaje);
         init();
-        //Floating Button Mensaje, no borrar
-        fabMenu.setOnFABMenuSelectedListener(this);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         RecyclerlistaMensajes.setLayoutManager(new LinearLayoutManager(this));
 
@@ -56,6 +52,11 @@ public class MensajeActivity extends AppCompatActivity implements OnFABMenuSelec
             return true;
         });
 
+        nuevoMensaje.setAttachmentsListener(() -> {
+            //ABRIR UNA VISTA PARA SELECCIONAR ARCHIVO
+            Toast.makeText(getApplicationContext(),"Seleccione un archivo",Toast.LENGTH_SHORT).show();
+        });
+
 
         //Acciones
     }
@@ -66,26 +67,6 @@ public class MensajeActivity extends AppCompatActivity implements OnFABMenuSelec
     private void init(){
         nuevoMensaje = (MessageInput)findViewById(R.id.nuevoMensaje);
         RecyclerlistaMensajes = (RecyclerView)findViewById(R.id.RecyclerListaMensajes);
-        fabMensaje = findViewById(R.id.btnMenuMensaje);
-        fabMenu = findViewById(R.id.fabMenuMensaje);
-        fabMenu.setMenu(R.menu.menu_mensaje);
-        fabMenu.bindAnchorView(fabMensaje);
-
     }
 
-    /**
-     * Menu para Floating Button
-     * @param view
-     * @param id
-     */
-    @Override
-    public void onMenuItemSelected(View view, int id) {
-        if (id == R.id.menu_adjuntar) {
-            Toast.makeText(getApplicationContext(), "Seleccione un documento, para enviar", Toast.LENGTH_SHORT).show();
-            //Acciones a realizar
-        } else if (id == R.id.menu_imagen) {
-            Toast.makeText(getApplicationContext(), "Seleccione una imagen, para enviar", Toast.LENGTH_SHORT).show();
-            //Acciones a realizar
-        }
-    }
 }

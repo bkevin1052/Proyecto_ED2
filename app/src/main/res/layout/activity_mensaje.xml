@@ -8,61 +8,35 @@
     tools:context=".MensajeActivity"
     android:background="#E6B783">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btnMenuMensaje"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="17dp"
-        android:layout_marginStart="13dp"
-        app:backgroundTint="@color/colorAccent"
-        app:fabSize="mini"
-        app:srcCompat="@drawable/ic_attachment" />
-
-    <com.hlab.fabrevealmenu.view.FABRevealMenu
-        android:id="@+id/fabMenuMensaje"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_alignParentBottom="true"
-        app:animateItems="true"
-        app:menuBackgroundColor="@color/colorAccent"
-        app:menuDirection="up"
-        app:menuRes="@menu/menu_mensaje"
-        app:menuSize="small"
-        app:menuTitleFontFamily="@font/quicksand"
-        app:menuTitleTextColor="@color/colorWhite"
-        app:showOverlay="true"
-        app:showTitle="true" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/RecyclerListaMensajes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/btnMenuMensaje"
-        android:layout_marginBottom="20dp"
+        android:layout_above="@+id/nuevoMensaje"
         android:scrollbars="vertical" />
 
     <com.stfalcon.chatkit.messages.MessageInput
         android:id="@+id/nuevoMensaje"
-        android:layout_width="339dp"
-        android:layout_height="93dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_below="@id/RecyclerListaMensajes"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="-21dp"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/btnMenuMensaje"
+        app:attachmentButtonBackground="@drawable/bubble_circle"
         app:attachmentButtonDefaultIconColor="@color/colorPrimary"
         app:attachmentButtonDefaultIconPressedColor="@color/colorAccent"
-        app:inputButtonBackground="@drawable/bubble_circle"
+        app:attachmentButtonHeight="35dp"
+        app:attachmentButtonWidth="35dp"
         app:inputButtonHeight="40dp"
-        app:inputButtonIcon="@drawable/ic_send"
-        app:inputButtonMargin="16dp"
         app:inputButtonWidth="40dp"
-        app:inputHint="Escribe un mensaje"
+        app:inputButtonIcon="@drawable/ic_send"
+        app:inputButtonBackground="@drawable/bubble_circle"
+        app:inputButtonDefaultIconColor="@color/white"
+        app:inputButtonDefaultIconDisabledColor="@color/white60"
+        app:inputBackground="@drawable/rounded_text"
         app:inputMaxLines="3"
         app:inputTextColor="@color/black"
-        app:inputTextSize="16sp" />
+        app:inputTextSize="16sp"
+        app:inputHint="Escribe un mensaje"
+        app:showAttachmentButton="true"/>
 
 </RelativeLayout>
