@@ -19,7 +19,7 @@ public interface NetworkCall {
     Observable<Response> registro(@Body Usuario user);
 
     @POST("authenticate")
-    Observable<Response> logIn();
+    Observable<Response>  logIn();
 
     @GET("users/{userName}")
     Observable<Usuario> obtenerUsuario(@Path("userName") String userName);

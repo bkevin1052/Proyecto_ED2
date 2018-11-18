@@ -46,7 +46,6 @@ public class RegistroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
-        mSubscriptions = new CompositeSubscription();
         init();
 
         CrearUsuario.setOnClickListener(view -> {
@@ -105,6 +104,7 @@ public class RegistroActivity extends AppCompatActivity {
             user.setCorreo(email);
             user.setContrasenia(contrasenia);
             mProgressbar.setVisibility(View.VISIBLE);
+            mSubscriptions = new CompositeSubscription();
             Registro(user);
         } else {
 
@@ -143,7 +143,7 @@ public class RegistroActivity extends AppCompatActivity {
             }
         } else {
 
-            showMessage("Erro de conexion !");
+            showMessage("Error de conexion !");
         }
     }
 

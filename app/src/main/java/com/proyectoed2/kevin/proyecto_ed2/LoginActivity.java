@@ -49,6 +49,7 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mSubscriptions = new CompositeSubscription();
         init();
         initSharedPreferences();
 
@@ -66,9 +67,10 @@ public class LoginActivity extends Activity {
         IniciarSesion = (Button)findViewById(R.id.btnIniciarSesion);
         userName = (EditText)findViewById(R.id.txtUsuario);
         password = (EditText)findViewById(R.id.txtContrasenia);
-        mProgressbar = (ProgressBar) findViewById(R.id.progress);
         consejoPassword = (TextInputLayout)findViewById(R.id.titlePassword);
         consejoUsername = (TextInputLayout)findViewById(R.id.titleUsuario);
+        mProgressbar = (ProgressBar)findViewById(R.id.progress);
+        mProgressbar.setVisibility(View.INVISIBLE);
     }
 
     private void initSharedPreferences() {
@@ -100,11 +102,12 @@ public class LoginActivity extends Activity {
         if (err == 0) {
 
             inicioSesion(nombreUsuario,contrasenia);
+            mProgressbar = (ProgressBar) findViewById(R.id.progress);
             mProgressbar.setVisibility(View.VISIBLE);
 
         } else {
 
-            showMessage("Enter Valid Details !");
+            showMessage("Ingrese datos validos!");
         }
     }
 
@@ -139,7 +142,7 @@ public class LoginActivity extends Activity {
             }
         } else {
 
-            showMessage("Network Error !");
+            showMessage("Error de conexion !");
         }
     }
 
