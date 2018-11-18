@@ -53,8 +53,6 @@ public class LoginActivity extends Activity {
         init();
         initSharedPreferences();
 
-        userName.setText("bkevin10");
-        password.setText("pepito123");
 
         Registrarse.setOnClickListener(view ->startActivity(new Intent(LoginActivity.this,RegistroActivity.class)));
 

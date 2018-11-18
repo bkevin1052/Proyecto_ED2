@@ -67,10 +67,6 @@ public class RegistroActivity extends AppCompatActivity {
         correo = (EditText) findViewById(R.id.txtCorreo);
         mProgressbar = (ProgressBar) findViewById(R.id.progress);
         mProgressbar.setVisibility(View.INVISIBLE);
-        //prueba de registro
-        userName.setText("bkevin10");
-        correo.setText("bkevin1052@gmail.com");
-        password.setText("pepito123");
     }
 
     /**
