@@ -62,7 +62,7 @@ public class SplashScreenActivity extends Activity {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         Token = mSharedPreferences.getString(Constants.TOKEN,"");
         userName = mSharedPreferences.getString(Constants.USERNAME,"");
-        if(Token!=null && userName != null){
+        if(Token!="" && userName != ""){
             loadProfile();
         }else{
             new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), LoginActivity.class)), 3000);
@@ -105,7 +105,7 @@ public class SplashScreenActivity extends Activity {
                 String errorBody = ((HttpException) error).response().errorBody().string();
                 Response response = gson.fromJson(errorBody,Response.class);
                 showMessage(response.getMessage());
-                new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), LoginActivity.class)), 4000);
+                new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), LoginActivity.class)), 3000);
 
             } catch (IOException e) {
                 e.printStackTrace();
