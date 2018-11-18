@@ -64,6 +64,7 @@ public class ChatActivity extends AppCompatActivity implements OnFABMenuSelected
     }
 
     private void logOut(){
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(Constants.USERNAME,"");
         editor.putString(Constants.TOKEN,"");
