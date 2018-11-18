@@ -48,14 +48,17 @@ public class RegistroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registro);
         init();
 
-        CrearUsuario.setOnClickListener(view -> {
-            registrarse();
-        });
+        //Boton  para registrarse
+        CrearUsuario.setOnClickListener(view -> registrarse());
 
+        //Boton Log In
         LogIn.setOnClickListener(view -> startActivity(new Intent(RegistroActivity.this, LoginActivity.class)));
     }
 
 
+    /**
+     * Metodo para iniciar todos los objetos en el layout
+     */
     private void init() {
         LogIn = (TextView) findViewById(R.id.lblIniciarSesion);
         CrearUsuario = (Button) findViewById(R.id.btnCrearCuenta);
@@ -70,6 +73,9 @@ public class RegistroActivity extends AppCompatActivity {
         password.setText("pepito123");
     }
 
+    /**
+     * Metodo para validar errores en el registro
+     */
     private void registrarse() {
 
         setError();
@@ -110,7 +116,13 @@ public class RegistroActivity extends AppCompatActivity {
 
             showMessage("Ingrese valores validos!");
         }
-    } private void Registro(Usuario user) {
+
+    }
+
+    /**
+     * Metodo que permite iniciar el proceso del registro en la api y base de datos
+     */
+    private void Registro(Usuario user) {
 
         mSubscriptions.add(BackendClient.getRetrofit().registro(user)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -118,12 +130,18 @@ public class RegistroActivity extends AppCompatActivity {
                 .subscribe(this::Response,this::onError));
     }
 
+    /**
+     * Metodo que permite manejar la respuesta
+     */
     private void Response(Response response) {
 
         mProgressbar.setVisibility(View.GONE);
         showMessage(response.getMessage());
     }
 
+    /**
+     * Metodo que permite manejar el error
+     */
     private void onError(Throwable error) {
 
         mProgressbar.setVisibility(View.GONE);

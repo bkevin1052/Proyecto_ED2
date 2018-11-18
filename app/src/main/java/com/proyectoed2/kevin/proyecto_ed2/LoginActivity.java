@@ -62,6 +62,9 @@ public class LoginActivity extends Activity {
 
     }
 
+    /**
+     * Metodo para iniciar todos los objetos del layout
+     */
     private void init(){
         Registrarse = (TextView)findViewById(R.id.lblRegistrar);
         IniciarSesion = (Button)findViewById(R.id.btnIniciarSesion);
@@ -73,11 +76,16 @@ public class LoginActivity extends Activity {
         mProgressbar.setVisibility(View.INVISIBLE);
     }
 
+    /**
+     * Metodo para iniciar SharedPreferences
+     */
     private void initSharedPreferences() {
-
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     }
 
+    /**
+     * Metodo para validar errores en el log In
+     */
     private void logIn() {
 
         setError();
@@ -111,6 +119,9 @@ public class LoginActivity extends Activity {
         }
     }
 
+    /**
+     * Metodo para el proceso de inicio de sesion
+     */
     private void inicioSesion(String userName, String password) {
 
         mSubscriptions.add(BackendClient.getRetrofit(userName, password).logIn()
@@ -123,6 +134,9 @@ public class LoginActivity extends Activity {
             Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Metodo que permite manejar el error
+     */
     private void handleError(Throwable error) {
 
         mProgressbar.setVisibility(View.GONE);
@@ -146,10 +160,13 @@ public class LoginActivity extends Activity {
         }
     }
 
+    /**
+     * Metodo que permite manejar la respuesta
+     */
     private void handleResponse(Response response) {
 
         mProgressbar.setVisibility(View.GONE);
-
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(Constants.TOKEN,response.getToken());
         editor.putString(Constants.USERNAME,response.getMessage());

@@ -9,7 +9,7 @@
     <dimen name="margin_sender">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="type_box_height">55dp</dimen>
-    <dimen name="detailed_text_size">16dp</dimen>
+    <dimen name="detailed_text_size">13dp</dimen>
     <dimen name="previewMessageSize">15sp</dimen>
     <dimen name="time_margin">8dp</dimen>
     <dimen name="button_margin">24dp</dimen>

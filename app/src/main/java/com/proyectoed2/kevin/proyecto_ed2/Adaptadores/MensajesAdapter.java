@@ -40,8 +40,12 @@ public class MensajesAdapter extends RecyclerView.Adapter<MensajesAdapter.ListaM
     public void onBindViewHolder(@NonNull ListaMensajesViewHolder holder, int position) {
 
         Mensaje mensaje = listaMensajes.get(position);
-        holder.textViewMensaje.setText(mensaje.getMensaje());
-        holder.textViewEmisor.setText(mensaje.getEmisor());
+        StringBuilder nuevoMensaje = new StringBuilder();
+        nuevoMensaje.append(mensaje.getEmisor());
+        nuevoMensaje.append(System.lineSeparator());
+        nuevoMensaje.append(mensaje.getMensaje());
+        holder.textViewMensaje.setText(nuevoMensaje.toString());
+
     }
 
     @Override
@@ -52,12 +56,10 @@ public class MensajesAdapter extends RecyclerView.Adapter<MensajesAdapter.ListaM
     class ListaMensajesViewHolder extends RecyclerView.ViewHolder{
 
         TextView textViewMensaje;
-        TextView textViewEmisor;
 
         public ListaMensajesViewHolder(View itemView) {
             super(itemView);
             textViewMensaje = itemView.findViewById(R.id.Mensaje);
-            textViewMensaje = itemView.findViewById(R.id.Emisor);
         }
     }
 

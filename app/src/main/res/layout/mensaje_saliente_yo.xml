@@ -8,30 +8,15 @@
     android:background="#E6B783">
 
     <TextView
-        android:id="@+id/Emisor"
-        android:layout_width="100dp"
-        android:layout_height="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="17dp"
-        android:background="@drawable/rounded_background"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:text="Mensaje"
-        android:textColor="@color/black"
-        android:textSize="5dp" />
-
-    <TextView
         android:id="@+id/Mensaje"
         android:layout_width="282dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/Emisor"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="17dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/rounded_background"
-        android:padding="@dimen/activity_horizontal_margin"
         android:text="Mensaje"
         android:textColor="@color/black"
         android:textSize="@dimen/detailed_text_size" />
