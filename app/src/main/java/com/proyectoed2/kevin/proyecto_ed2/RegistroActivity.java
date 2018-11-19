@@ -133,6 +133,7 @@ public class RegistroActivity extends AppCompatActivity {
 
         mProgressbar.setVisibility(View.GONE);
         showMessage(response.getMessage());
+        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
     }
 
     /**
