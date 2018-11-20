@@ -5,12 +5,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListaContactosActivity">
+    tools:context=".ListaContactosActivity"
+    android:background="#E6B783">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/RecyclerListaContactos"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

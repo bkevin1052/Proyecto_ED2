@@ -1,9 +1,12 @@
 package com.proyectoed2.kevin.proyecto_ed2.Network;
 
 
+import com.proyectoed2.kevin.proyecto_ed2.Modelos.Chat;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Response;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Usuario;
 
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -25,11 +28,14 @@ public interface NetworkCall {
     Observable<Usuario> obtenerUsuario(@Path("userName") String userName);
 
     @GET("chats/{userName}")
-    Observable<Usuario> obtenerChats(@Path("userName,Receptor")String userName);
+    Observable<ArrayList<Chat>> obtenerChats(@Path("userName,Receptor")String userName);
+
+    @GET("allcontacts")
+    Observable<ArrayList<Usuario>> obtenerContactos();
 
     @PUT("chats/{userName}")
     Observable<Usuario> agregarMensajesChats(@Path("userName,Receptor") String userName,@Body Usuario user);
 
-    @DELETE("users/{userName}")
-    Observable<Response> eliminarUsuario(@Path("userName") String userName, @Body Usuario user);
+    @DELETE("users/delete/{userName}")
+    Observable<Response> eliminarUsuario(@Path("userName") String userName);
 }

@@ -75,14 +75,62 @@ public class ChatActivity extends AppCompatActivity implements OnFABMenuSelected
     @Override
     public void onMenuItemSelected(View view, int id) {
         if (id == R.id.menu_nuevoChat) {
+            startActivity(new Intent(getApplicationContext(),ListaContactosActivity.class));
             Toast.makeText(getApplicationContext(), "Seleccione un contacto para chatear", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(getApplicationContext(),MensajeActivity.class));
-            //Acciones a realizar
         }else if(id == R.id.menu_cerrarSesion){
             logOut();
         }else if(id == R.id.menu_eliminarCuenta){
-            //Falta eliminar usuarios
+            mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            eliminarUsuario(mSharedPreferences.getString(Constants.USERNAME,""));
         }
+    }
+
+    private void eliminarUsuario(String userName) {
+
+        mSubscriptions.add(BackendClient.getRetrofit().eliminarUsuario(userName)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse,this::handleError));
+    }
+
+    private void showMessage(String message) {
+        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Metodo que permite manejar el error
+     */
+    private void handleError(Throwable error) {
+
+        mProgressbar.setVisibility(View.GONE);
+
+        if (error instanceof HttpException) {
+
+            Gson gson = new GsonBuilder().create();
+
+            try {
+
+                String errorBody = ((HttpException) error).response().errorBody().string();
+                Response response = gson.fromJson(errorBody,Response.class);
+                showMessage(response.getMessage());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+
+            showMessage("Error de conexion !");
+        }
+    }
+
+    /**
+     * Metodo que permite manejar la respuesta
+     */
+    private void handleResponse(Response response) {
+
+        mProgressbar.setVisibility(View.GONE);
+        showMessage(response.getMessage());
+        logOut();
     }
 
 
