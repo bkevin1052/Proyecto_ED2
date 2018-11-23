@@ -17,6 +17,7 @@ import com.google.gson.GsonBuilder;
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
 import com.proyectoed2.kevin.proyecto_ed2.Adaptadores.ChatAdapter;
+import com.proyectoed2.kevin.proyecto_ed2.Modelos.Chat;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Mensaje;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Response;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Usuario;
@@ -25,6 +26,7 @@ import com.proyectoed2.kevin.proyecto_ed2.Network.NetworkCall;
 import com.proyectoed2.kevin.proyecto_ed2.utils.Constants;
 
 import java.io.IOException;
+import java.util.List;
 
 import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
@@ -70,6 +72,7 @@ public class ChatActivity extends AppCompatActivity implements OnFABMenuSelected
         final FABRevealMenu fabMenu = findViewById(R.id.fabMenuChat);
         mProgressbar = (ProgressBar)findViewById(R.id.progress);
         RecyclerChats = (RecyclerView)findViewById(R.id.RecyclerListaChats);
+
         fabMenu.setMenu(R.menu.menu_chat);
         fabMenu.bindAnchorView(fabChat);
         fabMenu.setOnFABMenuSelectedListener(this);
@@ -133,6 +136,20 @@ public class ChatActivity extends AppCompatActivity implements OnFABMenuSelected
 
             showMessage("Error de conexion !");
         }
+    }
+
+    /**
+     * Metodo para obtener contactos
+     */
+//    private void obtenerChats() {
+//        mSubscriptions.add(BackendClient.getRetrofit()
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(this::handleResponse2,this::handleError));
+//    }
+
+    private void handleResponse2(List<Chat> chats) {
+
     }
 
     /**
