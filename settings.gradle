@@ -1,1 +1,1 @@
-include ':app', ':classes', ':gradle-wrapper'
+include ':app'
