@@ -36,13 +36,15 @@
         app:menuSize="normal"
         app:menuTitleFontFamily="@font/quicksand"
         app:menuTitleTextColor="@color/colorWhite"
-        app:showOverlay="true"
+        app:showOverlay="false"
         app:showTitle="true" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/RecyclerListaChats"
-        android:scrollbars="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scrollbars="vertical" />
 
 </RelativeLayout>

@@ -6,8 +6,8 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -17,15 +17,15 @@ import com.google.gson.GsonBuilder;
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
 import com.proyectoed2.kevin.proyecto_ed2.Adaptadores.ChatAdapter;
+import com.proyectoed2.kevin.proyecto_ed2.Adaptadores.ContactosAdapter;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Chat;
-import com.proyectoed2.kevin.proyecto_ed2.Modelos.Mensaje;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Response;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Usuario;
 import com.proyectoed2.kevin.proyecto_ed2.Network.BackendClient;
-import com.proyectoed2.kevin.proyecto_ed2.Network.NetworkCall;
 import com.proyectoed2.kevin.proyecto_ed2.utils.Constants;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.adapter.rxjava.HttpException;
@@ -38,14 +38,16 @@ public class ChatActivity extends AppCompatActivity implements OnFABMenuSelected
 
     private CompositeSubscription mSubscriptions;
     private SharedPreferences mSharedPreferences;
+    ChatAdapter chatAdapter = null;
 
     private ProgressBar mProgressbar;
 
     private String Token;
     private String userName;
 
-    ChatAdapter chatAdapter;
+
     RecyclerView RecyclerChats;
+    ArrayList<Chat> listaChats = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +78,7 @@ public class ChatActivity extends AppCompatActivity implements OnFABMenuSelected
         fabMenu.setMenu(R.menu.menu_chat);
         fabMenu.bindAnchorView(fabChat);
         fabMenu.setOnFABMenuSelectedListener(this);
+        obtenerChats(SplashScreenActivity.usuario);
     }
 
     private void logOut(){
@@ -141,15 +144,28 @@ public class ChatActivity extends AppCompatActivity implements OnFABMenuSelected
     /**
      * Metodo para obtener contactos
      */
-//    private void obtenerChats() {
-//        mSubscriptions.add(BackendClient.getRetrofit()
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe(this::handleResponse2,this::handleError));
-//    }
+    private void obtenerChats(String userName) {
+        mSubscriptions.add(BackendClient.getRetrofit().obtenerChats(userName)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse2,this::handleError));
+    }
 
-    private void handleResponse2(List<Chat> chats) {
+    private void handleResponse2(List<Chat> response) {
+        listaChats.clear();
+        for(int i = 0; i < response.size();i++){
+            listaChats.add(response.get(i));
+        }
+        RecyclerChats.setLayoutManager(new LinearLayoutManager(this));
+        chatAdapter = new ChatAdapter(this, listaChats);
+        RecyclerChats.setAdapter(chatAdapter);
+        mProgressbar.setVisibility(View.INVISIBLE);
 
+
+
+        chatAdapter.setOnClickListener(view ->{
+            startActivity(new Intent(getApplicationContext(),MensajeActivity.class));
+        });
     }
 
     /**

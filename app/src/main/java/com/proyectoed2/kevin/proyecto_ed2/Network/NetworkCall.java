@@ -32,8 +32,8 @@ public interface NetworkCall {
     @GET("users/get/allcontacts")
     Observable<List<Usuario>> obtenerContactos();//Ya implementado
 
-    @GET("chats/get/allchats")
-    Observable<ArrayList<Chat>> obtenerChats(@Path("userName,Receptor")String userName);//No implementado
+    @GET("chats/get/allchats/{userName}")
+    Observable<List<Chat>> obtenerChats(@Path("userName")String userName);//No implementado
 
     @PUT("chats/put/{userName}")
     Observable<Usuario> agregarMensajesChats(@Path("userName,Receptor") String userName,@Body Usuario user);//No implementado

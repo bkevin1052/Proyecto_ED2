@@ -114,7 +114,14 @@ public class SplashScreenActivity extends Activity {
                 e.printStackTrace();
             }
         } else {
-            showMessage("Error de conexion!");
+
+            try {
+                new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), LoginActivity.class)), 3000);
+            }
+            catch(Exception e)
+            {
+                showMessage("Error de conexion!");
+            }
         }
     }
 

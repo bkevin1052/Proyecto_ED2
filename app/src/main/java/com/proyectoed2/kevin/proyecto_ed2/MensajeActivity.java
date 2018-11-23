@@ -25,10 +25,14 @@ import com.stfalcon.chatkit.messages.MessageInput;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 public class MensajeActivity extends AppCompatActivity{
 
     private SharedPreferences mSharedPreferences;
+    private CompositeSubscription mSubscriptions;
     RecyclerView RecyclerlistaMensajes;
     MensajesAdapter adapterMensajes;
     Chat nuevoChat = new Chat();
@@ -46,11 +50,16 @@ public class MensajeActivity extends AppCompatActivity{
             Mensaje mensaje_saliente = new Mensaje();
             mensaje_saliente.setMensaje(String.valueOf(mensaje));
             mensaje_saliente.setEmisor(mSharedPreferences.getString(Constants.USERNAME,null));
+
+
+
             nuevoChat.listaMensajes.add(mensaje_saliente);
             adapterMensajes = new MensajesAdapter(this,nuevoChat.listaMensajes);
             RecyclerlistaMensajes.setAdapter(adapterMensajes);
             return true;
         });
+
+
 
         nuevoMensaje.setAttachmentsListener(() -> {
             //ABRIR UNA VISTA PARA SELECCIONAR ARCHIVO
@@ -73,4 +82,21 @@ public class MensajeActivity extends AppCompatActivity{
         RecyclerlistaMensajes = (RecyclerView)findViewById(R.id.RecyclerListaMensajes);
     }
 
+    /**
+     * Metodo para crear mensajes
+     */
+//    private void CrearMensaje(Chat chat) {
+//        mSubscriptions.add(BackendClient.getRetrofit().crearchat(chat)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(this::handleResponse2,this::handleError));
+//    }
+
+    private void handleError(Throwable throwable) {
+
+    }
+
+    private void handleResponse2(Response response) {
+
+    }
 }

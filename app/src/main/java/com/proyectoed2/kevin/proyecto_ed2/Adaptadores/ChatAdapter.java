@@ -18,11 +18,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ListaChatViewH
 
 
     private Context miContexto;
-    private ArrayList<Usuario> data;
+    private ArrayList<Chat> data;
     private View.OnClickListener listener;
+    public String usuario;
 
 
-    public ChatAdapter(Context miContexto, ArrayList<Usuario> data) {
+    public ChatAdapter(Context miContexto, ArrayList<Chat> data) {
         this.miContexto = miContexto;
         this.data = data;
     }
@@ -39,8 +40,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ListaChatViewH
     @Override
     public void onBindViewHolder(@NonNull ListaChatViewHolder holder, int position) {
 
-        Usuario seleccion = data.get(position);
-        holder.textViewNombre.setText(seleccion.getUserName());
+        Chat seleccion = data.get(position);
+        holder.textViewNombre.setText(seleccion.getContacto1());
     }
 
     @Override
@@ -58,7 +59,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ListaChatViewH
         }
     }
 
-    public void addAll(ArrayList<Usuario> list) {
+    public void addAll(ArrayList<Chat> list) {
         if (list.size() > 0) {
             data.clear();
             data.addAll(list);
