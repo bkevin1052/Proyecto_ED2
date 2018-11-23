@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mylibrary.SDES;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Response;
@@ -20,7 +21,10 @@ import com.proyectoed2.kevin.proyecto_ed2.Network.BackendClient;
 import com.proyectoed2.kevin.proyecto_ed2.utils.Constants;
 import com.proyectoed2.kevin.proyecto_ed2.utils.Validacion;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
@@ -44,6 +48,7 @@ public class LoginActivity extends Activity {
     private SharedPreferences mSharedPreferences;
 
     private ProgressBar mProgressbar;
+    int[] P10,P8,IP,EP,P4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,11 @@ public class LoginActivity extends Activity {
         Registrarse.setOnClickListener(view ->startActivity(new Intent(LoginActivity.this,RegistroActivity.class)));
 
         IniciarSesion.setOnClickListener(view ->logIn());
+        P10 = new int[10];
+        P8=new int[8];
+        IP = new int[8];
+        EP = new int[8];
+        P4 = new int[4];
 
     }
 
@@ -87,9 +97,19 @@ public class LoginActivity extends Activity {
     private void logIn() {
 
         setError();
-
+        lecturaPermutaciones();
         String nombreUsuario = userName.getText().toString();
         String contrasenia = password.getText().toString();
+        String contraseniaCifrada = "";
+        String llave = "0001000101";
+
+        char[] caracter = contrasenia.toCharArray();
+        SDES sdesCifrado;
+        for(char c: caracter)
+        {
+            sdesCifrado = new SDES((char)c,llave,P10,P8,IP,EP,P4);
+            contraseniaCifrada += sdesCifrado.encriptar();
+        }
 
         int err = 0;
 
@@ -99,7 +119,7 @@ public class LoginActivity extends Activity {
             consejoUsername.setError("Nombre de usuario debe ser valido!");
         }
 
-        if (!Validacion.validateFields(contrasenia)) {
+        if (!Validacion.validateFields(contraseniaCifrada)) {
 
             err++;
             consejoPassword.setError("Contraseña debe ser valida!");
@@ -107,7 +127,7 @@ public class LoginActivity extends Activity {
 
         if (err == 0) {
 
-            inicioSesion(nombreUsuario,contrasenia);
+            inicioSesion(nombreUsuario,contraseniaCifrada);
             mProgressbar = (ProgressBar) findViewById(R.id.progress);
             mProgressbar.setVisibility(View.VISIBLE);
 
@@ -188,5 +208,37 @@ public class LoginActivity extends Activity {
         mSubscriptions.unsubscribe();
     }
 
+    private void lecturaPermutaciones(){
+        try {
+            InputStream in = this.getResources().openRawResource(R.raw.config);
+            BufferedReader rd = new BufferedReader(new InputStreamReader(in));
+            String linea;
+            String[] permutaciones = new String[2];
+            if (in != null) {
+                while ((linea = rd.readLine()) != null) {
+                    permutaciones = linea.split("\\|");
+                }
+                for (int i = 0; i < permutaciones[0].length(); i++) {
+                    P10[i] = Integer.parseInt(String.valueOf(permutaciones[0].charAt(i)));
+                }
+                for (int i = 0; i < permutaciones[1].length(); i++) {
+                    P8[i] = Integer.parseInt(String.valueOf(permutaciones[1].charAt(i)));
+                }
+                for (int i = 0; i < permutaciones[2].length(); i++) {
+                    IP[i] = Integer.parseInt(String.valueOf(permutaciones[2].charAt(i)));
+                }
+                for (int i = 0; i < permutaciones[3].length(); i++) {
+                    EP[i] = Integer.parseInt(String.valueOf(permutaciones[3].charAt(i)));
+                }
+                for (int i = 0; i < permutaciones[4].length(); i++) {
+                    P4[i] = Integer.parseInt(String.valueOf(permutaciones[4].charAt(i)));
+                }
+            }
+        }
+        catch (Exception e)
+        {
 
+        }
+
+    }
 }
