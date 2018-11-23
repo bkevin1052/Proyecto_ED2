@@ -66,6 +66,7 @@ public class SplashScreenActivity extends Activity {
             loadProfile();
         }else{
             new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), LoginActivity.class)), 3000);
+
         }
     }
 

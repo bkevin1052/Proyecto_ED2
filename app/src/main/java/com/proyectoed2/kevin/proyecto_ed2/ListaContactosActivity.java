@@ -48,12 +48,6 @@ public class ListaContactosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_contactos);
         init();
-
-        adapterContactos.setOnClickListener(view ->{
-            Usuario nombre = listaContactos.get(RecyclerlistaContactos.getChildAdapterPosition(view));//Obtiene la posicion del usuario
-            Toast.makeText(getApplicationContext(),"Este contacto se llama " + nombre ,Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(getApplicationContext(),ChatActivity.class));
-        });
     }
 
     private void init(){
@@ -61,8 +55,6 @@ public class ListaContactosActivity extends AppCompatActivity {
         RecyclerlistaContactos = (RecyclerView)findViewById(R.id.RecyclerListaContactos);
         mSubscriptions = new CompositeSubscription();
         RecyclerlistaContactos.setLayoutManager(new LinearLayoutManager(this));
-        adapterContactos = new ContactosAdapter(this, listaContactos);
-        RecyclerlistaContactos.setAdapter(adapterContactos);
         obtenerContactos();
         mProgressbar.setVisibility(View.VISIBLE);
 
@@ -131,10 +123,15 @@ public class ListaContactosActivity extends AppCompatActivity {
         for(int i = 0; i < response.size();i++){
             listaContactos.add(response.get(i));
         }
-        RecyclerlistaContactos = (RecyclerView)findViewById(R.id.RecyclerListaContactos);
         RecyclerlistaContactos.setLayoutManager(new LinearLayoutManager(this));
         adapterContactos = new ContactosAdapter(this, listaContactos);
         RecyclerlistaContactos.setAdapter(adapterContactos);
         mProgressbar.setVisibility(View.INVISIBLE);
+
+        adapterContactos.setOnClickListener(view ->{
+            Usuario nombre = listaContactos.get(RecyclerlistaContactos.getChildAdapterPosition(view));//Obtiene la posicion del usuario
+            Toast.makeText(getApplicationContext(),"Este contacto se llama " + nombre.getUserName() ,Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(),MensajeActivity.class));
+        });
     }
 }

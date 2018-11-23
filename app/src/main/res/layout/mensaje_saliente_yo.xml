@@ -6,11 +6,6 @@
     android:layout_margin="@dimen/activity_horizontal_margin"
     android:orientation="vertical"
     android:background="#E6B783">
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:foreground="?android:attr/selectableItemBackground">
 
     <TextView
         android:id="@+id/Mensaje"
@@ -25,7 +20,6 @@
         android:text="Mensaje"
         android:textColor="@color/black"
         android:textSize="@dimen/detailed_text_size" />
-    </android.support.v7.widget.CardView>
 
 
 </RelativeLayout>
