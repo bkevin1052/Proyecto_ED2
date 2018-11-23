@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ import com.proyectoed2.kevin.proyecto_ed2.utils.Constants;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
@@ -35,32 +38,55 @@ public class ListaContactosActivity extends AppCompatActivity {
     private CompositeSubscription mSubscriptions;
     private SharedPreferences mSharedPreferences;
     RecyclerView RecyclerlistaContactos;
-    ContactosAdapter adapterContactos;
-
+    ContactosAdapter adapterContactos= null;
     private ProgressBar mProgressbar;
+
+    ArrayList<Usuario> listaContactos = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_contactos);
         init();
-        mSubscriptions = new CompositeSubscription();
-        RecyclerlistaContactos.setLayoutManager(new LinearLayoutManager(this));
 
-        obtenerContactos();
+        adapterContactos.setOnClickListener(view ->{
+            Usuario nombre = listaContactos.get(RecyclerlistaContactos.getChildAdapterPosition(view));//Obtiene la posicion del usuario
+            Toast.makeText(getApplicationContext(),"Este contacto se llama " + nombre ,Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(),ChatActivity.class));
+        });
     }
 
     private void init(){
         mProgressbar = (ProgressBar)findViewById(R.id.progress);
         RecyclerlistaContactos = (RecyclerView)findViewById(R.id.RecyclerListaContactos);
+        mSubscriptions = new CompositeSubscription();
+        RecyclerlistaContactos.setLayoutManager(new LinearLayoutManager(this));
+        adapterContactos = new ContactosAdapter(this, listaContactos);
+        RecyclerlistaContactos.setAdapter(adapterContactos);
+        obtenerContactos();
         mProgressbar.setVisibility(View.VISIBLE);
+
+
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_mensaje,menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.settings:
+                obtenerContactos();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
      * Metodo para obtener contactos
      */
     private void obtenerContactos() {
-
         mSubscriptions.add(BackendClient.getRetrofit().obtenerContactos()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -77,6 +103,7 @@ public class ListaContactosActivity extends AppCompatActivity {
      */
     private void handleError(Throwable error) {
 
+        mProgressbar.setVisibility(View.INVISIBLE);
         if (error instanceof HttpException) {
 
             Gson gson = new GsonBuilder().create();
@@ -99,9 +126,15 @@ public class ListaContactosActivity extends AppCompatActivity {
     /**
      * Metodo que permite manejar la respuesta
      */
-    private void handleResponse(ArrayList<Usuario> response) {
-       adapterContactos = new ContactosAdapter(this, response);
-       RecyclerlistaContactos.setAdapter(adapterContactos);
-
+    private void handleResponse(List<Usuario> response) {
+        listaContactos.clear();
+        for(int i = 0; i < response.size();i++){
+            listaContactos.add(response.get(i));
+        }
+        RecyclerlistaContactos = (RecyclerView)findViewById(R.id.RecyclerListaContactos);
+        RecyclerlistaContactos.setLayoutManager(new LinearLayoutManager(this));
+        adapterContactos = new ContactosAdapter(this, listaContactos);
+        RecyclerlistaContactos.setAdapter(adapterContactos);
+        mProgressbar.setVisibility(View.INVISIBLE);
     }
 }

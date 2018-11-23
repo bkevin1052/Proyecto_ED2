@@ -7,6 +7,12 @@
     android:clickable="true"
     android:orientation="vertical">
 
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:foreground="?android:attr/selectableItemBackground">
+
     <ImageView
         android:id="@+id/smsImage"
         android:layout_width="42dp"
@@ -18,25 +24,13 @@
         android:id="@+id/nombreContacto"
         android:layout_width="241dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="69dp"
+        android:layout_marginLeft="80dp"
         android:layout_marginRight="@dimen/margin_imageview"
         android:layout_marginTop="@dimen/margin_sender"
         android:layout_toRightOf="@id/smsImage"
         android:text="PERSONA"
         android:textAllCaps="true"
         android:textColor="@color/black" />
-
-    <TextView
-        android:id="@+id/ultimoMensaje"
-        android:layout_width="241dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="69dp"
-        android:layout_marginRight="@dimen/margin_imageview"
-        android:layout_below="@+id/nombreContacto"
-        android:layout_marginTop="@dimen/margin_sender"
-        android:layout_toRightOf="@id/smsImage"
-        android:text="Ultimo Mensaje"
-        android:textAllCaps="true"
-        android:textColor="@color/black" />
+    </android.support.v7.widget.CardView>
 
 </RelativeLayout>

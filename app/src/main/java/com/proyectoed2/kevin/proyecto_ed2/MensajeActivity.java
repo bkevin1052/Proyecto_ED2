@@ -57,6 +57,10 @@ public class MensajeActivity extends AppCompatActivity{
             Toast.makeText(getApplicationContext(),"Seleccione un archivo",Toast.LENGTH_SHORT).show();
         });
 
+        adapterMensajes.setOnClickListener(view ->{
+            //PARA SELECCIONAR CUALQUIER MENSAJE EN EL RECYCLER VIEW
+        });
+
 
         //Acciones
     }

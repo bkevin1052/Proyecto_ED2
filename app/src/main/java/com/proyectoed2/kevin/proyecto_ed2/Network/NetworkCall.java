@@ -5,10 +5,9 @@ import com.proyectoed2.kevin.proyecto_ed2.Modelos.Chat;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Response;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Usuario;
 
-
 import java.util.ArrayList;
+import java.util.List;
 
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -19,23 +18,23 @@ import rx.Observable;
 
 public interface NetworkCall {
     @POST("users")
-    Observable<Response> registro(@Body Usuario user);
+    Observable<Response> registro(@Body Usuario user);//Ya implementado
 
     @POST("authenticate")
-    Observable<Response>  logIn();
+    Observable<Response>  logIn();//Ya implementado
 
     @GET("users/{userName}")
-    Observable<Usuario> obtenerUsuario(@Path("userName") String userName);
-
-    @GET("chats/{userName}")
-    Observable<ArrayList<Chat>> obtenerChats(@Path("userName,Receptor")String userName);
-
-    @GET("allcontacts")
-    Observable<ArrayList<Usuario>> obtenerContactos();
-
-    @PUT("chats/{userName}")
-    Observable<Usuario> agregarMensajesChats(@Path("userName,Receptor") String userName,@Body Usuario user);
+    Observable<Usuario> obtenerUsuario(@Path("userName") String userName);//Ya implementado
 
     @DELETE("users/delete/{userName}")
-    Observable<Response> eliminarUsuario(@Path("userName") String userName);
+    Observable<Response> eliminarUsuario(@Path("userName") String userName);//Ya implementado
+
+    @GET("users/get/allcontacts")
+    Observable<List<Usuario>> obtenerContactos();//Ya implementado
+
+    @GET("chats/get/{userName}")
+    Observable<ArrayList<Chat>> obtenerChats(@Path("userName,Receptor")String userName);//No implementado
+
+    @PUT("chats/put/{userName}")
+    Observable<Usuario> agregarMensajesChats(@Path("userName,Receptor") String userName,@Body Usuario user);//No implementado
 }

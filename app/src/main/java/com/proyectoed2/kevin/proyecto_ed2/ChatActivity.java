@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -15,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
+import com.proyectoed2.kevin.proyecto_ed2.Adaptadores.ChatAdapter;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Mensaje;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Response;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Usuario;
@@ -40,6 +42,9 @@ public class ChatActivity extends AppCompatActivity implements OnFABMenuSelected
     private String Token;
     private String userName;
 
+    ChatAdapter chatAdapter;
+    RecyclerView RecyclerChats;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +55,12 @@ public class ChatActivity extends AppCompatActivity implements OnFABMenuSelected
 
         //Acciones con los chats "CHAT ADAPTER SET ON CLICK LISTERNER"
 
+        //chatAdapter.setOnClickListener(view->{
+            //PARA SELECCIONAR CUALQUIER CHAT EN EL RECYCLER VIEW
+       //});
+
+
+
 
     }
 
@@ -58,6 +69,7 @@ public class ChatActivity extends AppCompatActivity implements OnFABMenuSelected
         final FloatingActionButton fabChat = findViewById(R.id.btnMenuChat);
         final FABRevealMenu fabMenu = findViewById(R.id.fabMenuChat);
         mProgressbar = (ProgressBar)findViewById(R.id.progress);
+        RecyclerChats = (RecyclerView)findViewById(R.id.RecyclerListaChats);
         fabMenu.setMenu(R.menu.menu_chat);
         fabMenu.bindAnchorView(fabChat);
         fabMenu.setOnFABMenuSelectedListener(this);

@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Usuario;
 import com.proyectoed2.kevin.proyecto_ed2.R;
+import com.proyectoed2.kevin.proyecto_ed2.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ContactosAdapter extends RecyclerView.Adapter<ContactosAdapter.ListaContactosViewHolder> implements View.OnClickListener {
 
@@ -40,6 +42,7 @@ public class ContactosAdapter extends RecyclerView.Adapter<ContactosAdapter.List
 
         Usuario seleccion = listaContactos.get(position);
         holder.textViewNombre.setText(seleccion.getUserName());
+
     }
 
     @Override
