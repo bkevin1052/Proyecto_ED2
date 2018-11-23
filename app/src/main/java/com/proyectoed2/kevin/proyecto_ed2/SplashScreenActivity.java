@@ -38,6 +38,7 @@ public class SplashScreenActivity extends Activity {
     private TextView Titulo;
     private SharedPreferences mSharedPreferences;
     private CompositeSubscription mSubscriptions;
+    public static String usuario;
 
     private String Token;
     private String userName;
@@ -89,6 +90,7 @@ public class SplashScreenActivity extends Activity {
 
         //SE OBTIENE LA INFORMACION DEL USUARIO;
         new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(),ChatActivity.class)), 3000);
+        usuario = user.getUserName();
         Toast.makeText(getApplicationContext(),"BIENVENIDO " + user.getUserName() .toUpperCase(),Toast.LENGTH_SHORT).show();
     }
 

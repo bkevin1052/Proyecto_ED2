@@ -18,6 +18,7 @@ import com.google.gson.GsonBuilder;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
 import com.proyectoed2.kevin.proyecto_ed2.Adaptadores.ContactosAdapter;
 import com.proyectoed2.kevin.proyecto_ed2.Adaptadores.MensajesAdapter;
+import com.proyectoed2.kevin.proyecto_ed2.Modelos.Chat;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Response;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Usuario;
 import com.proyectoed2.kevin.proyecto_ed2.Network.BackendClient;
@@ -26,6 +27,7 @@ import com.proyectoed2.kevin.proyecto_ed2.utils.Constants;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
@@ -85,6 +87,20 @@ public class ListaContactosActivity extends AppCompatActivity {
                 .subscribe(this::handleResponse,this::handleError));
     }
 
+    /**
+     * Metodo para obtener contactos
+     */
+    private void CrearChat(Chat chat) {
+        mSubscriptions.add(BackendClient.getRetrofit().crearchat(chat)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse2,this::handleError));
+    }
+
+    private void handleResponse2(Response response) {
+        startActivity(new Intent(getApplicationContext(),MensajeActivity.class));
+    }
+
     private void showMessage(String message) {
         Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
         mProgressbar.setVisibility(View.GONE);
@@ -128,10 +144,27 @@ public class ListaContactosActivity extends AppCompatActivity {
         RecyclerlistaContactos.setAdapter(adapterContactos);
         mProgressbar.setVisibility(View.INVISIBLE);
 
+
+
         adapterContactos.setOnClickListener(view ->{
             Usuario nombre = listaContactos.get(RecyclerlistaContactos.getChildAdapterPosition(view));//Obtiene la posicion del usuario
-            Toast.makeText(getApplicationContext(),"Este contacto se llama " + nombre.getUserName() ,Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(getApplicationContext(),MensajeActivity.class));
+            Chat nuevo_chat = new Chat();
+            nuevo_chat.setContacto1(SplashScreenActivity.usuario);
+            nuevo_chat.setContacto2(nombre.getUserName());
+            nuevo_chat.setLlave(Crearllave());
+            CrearChat(nuevo_chat);
+
         });
+    }
+
+    private String Crearllave() {
+        String llave = "";
+        Random r = new Random(System.currentTimeMillis());
+        for (int i= 0; i<10;i++)
+        {
+            int n = r.nextInt(2);
+            llave += Integer.toString(n);
+        }
+        return llave;
     }
 }

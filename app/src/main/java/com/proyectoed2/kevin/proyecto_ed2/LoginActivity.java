@@ -50,6 +50,8 @@ public class LoginActivity extends Activity {
     private ProgressBar mProgressbar;
     int[] P10,P8,IP,EP,P4;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +101,7 @@ public class LoginActivity extends Activity {
         setError();
         lecturaPermutaciones();
         String nombreUsuario = userName.getText().toString();
+        SplashScreenActivity.usuario = nombreUsuario;
         String contrasenia = password.getText().toString();
         String contraseniaCifrada = "";
         String llave = "0001000101";

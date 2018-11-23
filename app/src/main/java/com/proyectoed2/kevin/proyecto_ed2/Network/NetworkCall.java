@@ -37,4 +37,7 @@ public interface NetworkCall {
 
     @PUT("chats/put/{userName}")
     Observable<Usuario> agregarMensajesChats(@Path("userName,Receptor") String userName,@Body Usuario user);//No implementado
+
+    @POST("chats/nuevochat/create")
+    Observable<Response>  crearchat(@Body Chat chat);//Ya implementado
 }
