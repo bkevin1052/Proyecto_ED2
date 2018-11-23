@@ -32,7 +32,7 @@ public interface NetworkCall {
     @GET("users/get/allcontacts")
     Observable<List<Usuario>> obtenerContactos();//Ya implementado
 
-    @GET("chats/get/{userName}")
+    @GET("chats/get/allchats")
     Observable<ArrayList<Chat>> obtenerChats(@Path("userName,Receptor")String userName);//No implementado
 
     @PUT("chats/put/{userName}")
