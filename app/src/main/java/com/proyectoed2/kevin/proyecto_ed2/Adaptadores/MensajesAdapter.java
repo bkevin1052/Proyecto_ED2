@@ -59,6 +59,7 @@ public class MensajesAdapter extends RecyclerView.Adapter<MensajesAdapter.ListaM
 
         public ListaMensajesViewHolder(View itemView) {
             super(itemView);
+
             textViewMensaje = itemView.findViewById(R.id.Mensaje);
         }
     }

@@ -39,6 +39,7 @@ public class SplashScreenActivity extends Activity {
     private SharedPreferences mSharedPreferences;
     private CompositeSubscription mSubscriptions;
     public static String usuario;
+    public static  String receptor;
 
     private String Token;
     private String userName;

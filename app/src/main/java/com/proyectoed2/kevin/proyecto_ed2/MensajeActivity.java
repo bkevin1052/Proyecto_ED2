@@ -10,10 +10,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import com.example.mylibrary.SDES;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.proyectoed2.kevin.proyecto_ed2.Adaptadores.ChatAdapter;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Response;
 
 import com.proyectoed2.kevin.proyecto_ed2.Adaptadores.MensajesAdapter;
@@ -25,9 +28,13 @@ import com.proyectoed2.kevin.proyecto_ed2.utils.Constants;
 import com.stfalcon.chatkit.messages.MessageInput;
 
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
 
 import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
@@ -36,6 +43,10 @@ import rx.subscriptions.CompositeSubscription;
 
 public class MensajeActivity extends AppCompatActivity{
 
+    int[] P10,P8,IP,EP,P4;
+    String llave;
+    RecyclerView RecyclerChats;
+    ArrayList<Chat> listaChats = new ArrayList<>();
     private SharedPreferences mSharedPreferences;
     private CompositeSubscription mSubscriptions;
     RecyclerView RecyclerlistaMensajes;
@@ -53,6 +64,11 @@ public class MensajeActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mensaje);
+        P10 = new int[10];
+        P8=new int[8];
+        IP = new int[8];
+        EP = new int[8];
+        P4 = new int[4];
         isFinished = false;
         mSubscriptions = new CompositeSubscription();
         init();
@@ -62,9 +78,27 @@ public class MensajeActivity extends AppCompatActivity{
         //ENVIO DE MENSAJES
         nuevoMensaje.setInputListener(mensaje -> {
             mensaje_saliente = new Mensaje();
+            lecturaPermutaciones();
+            String contraseniaCifrada = "";
+
+            char[] caracter = String.valueOf(mensaje).toCharArray();
+            SDES sdesCifrado;
+
+            try {
+                for (char c : caracter) {
+
+
+                    sdesCifrado = new SDES((char) c, llave, P10, P8, IP, EP, P4);
+                    contraseniaCifrada += sdesCifrado.encriptar();
+                }
+            }
+            catch(Exception e)
+            {
+                String error = e.getMessage();
+            }
             mensaje_saliente.setMensaje(String.valueOf(mensaje));
             mensaje_saliente.setEmisor(mSharedPreferences.getString(Constants.USERNAME,null));
-            mensaje_saliente.setReceptor(ChatActivity.receptor);
+            mensaje_saliente.setReceptor(SplashScreenActivity.receptor)
             mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             Token = mSharedPreferences.getString(Constants.TOKEN,"");
             userName = mSharedPreferences.getString(Constants.USERNAME,"");
@@ -72,7 +106,7 @@ public class MensajeActivity extends AppCompatActivity{
             CrearMensaje(mensaje_saliente);
 
             try {
-                Thread.sleep(2000);
+                Thread.sleep(600);
             }
             catch(Exception e)
                     {}
@@ -80,7 +114,7 @@ public class MensajeActivity extends AppCompatActivity{
         });
         Chat chat = new Chat();
         chat.setContacto1(SplashScreenActivity.usuario);
-        chat.setContacto2(ChatActivity.receptor);
+        chat.setContacto2(SplashScreenActivity.receptor);
         chat.setLlave("");
 
 
@@ -99,6 +133,56 @@ public class MensajeActivity extends AppCompatActivity{
 
 
         //Acciones
+    }
+    /**
+     * Metodo para obtener contactos
+     */
+    private void obtenerChats(String userName) {
+        mSubscriptions.add(BackendClient.getRetrofit().obtenerChats(userName)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse2,this::handleError));
+    }
+
+    private void handleResponse2(List<Chat> response) {
+        listaChats.clear();
+        for(int i = 0; i < response.size();i++){
+            listaChats.add(response.get(i));
+        }
+    }
+
+    private void lecturaPermutaciones() {
+
+        try {
+            InputStream in = this.getResources().openRawResource(R.raw.config);
+            BufferedReader rd = new BufferedReader(new InputStreamReader(in));
+            String linea;
+            String[] permutaciones = new String[2];
+            if (in != null) {
+                while ((linea = rd.readLine()) != null) {
+                    permutaciones = linea.split("\\|");
+                }
+                for (int i = 0; i < permutaciones[0].length(); i++) {
+                    P10[i] = Integer.parseInt(String.valueOf(permutaciones[0].charAt(i)));
+                }
+                for (int i = 0; i < permutaciones[1].length(); i++) {
+                    P8[i] = Integer.parseInt(String.valueOf(permutaciones[1].charAt(i)));
+                }
+                for (int i = 0; i < permutaciones[2].length(); i++) {
+                    IP[i] = Integer.parseInt(String.valueOf(permutaciones[2].charAt(i)));
+                }
+                for (int i = 0; i < permutaciones[3].length(); i++) {
+                    EP[i] = Integer.parseInt(String.valueOf(permutaciones[3].charAt(i)));
+                }
+                for (int i = 0; i < permutaciones[4].length(); i++) {
+                    P4[i] = Integer.parseInt(String.valueOf(permutaciones[4].charAt(i)));
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            String error = e.getMessage();
+        }
     }
 
 
@@ -183,9 +267,11 @@ public class MensajeActivity extends AppCompatActivity{
     private void handleResponse3(List<Chat> response) {
         listaMensajes.clear();
         for(int i = 0; i < response.get(0).listaMensajes.size();i++){
+
             listaMensajes.add(response.get(0).listaMensajes.get(i));
         }
         nuevoChat.listaMensajes = listaMensajes;
+        llave = response.get(0).getLlave();
         RecyclerlistaMensajes.setLayoutManager(new LinearLayoutManager(this));
         adapterMensajes = new MensajesAdapter(this, listaMensajes);
         RecyclerlistaMensajes.setAdapter(adapterMensajes);

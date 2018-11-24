@@ -2,14 +2,12 @@ package com.proyectoed2.kevin.proyecto_ed2.Modelos;
 
 import android.media.Image;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.io.File;
 
 public class Mensaje {
 
-    private String Emisor;
-    private String Receptor;
+    private String emisor;
+    private String receptor;
     private String mensaje;
     private File documento;
     private Image imagen;
@@ -48,18 +46,18 @@ public class Mensaje {
     }
 
     public String getEmisor() {
-        return Emisor;
+        return emisor;
     }
 
     public void setEmisor(String emisor) {
-        Emisor = emisor;
+        this.emisor = emisor;
     }
 
     public String getReceptor() {
-        return Receptor;
+        return receptor;
     }
 
     public void setReceptor(String receptor) {
-        Receptor = receptor;
+        this.receptor = receptor;
     }
 }
