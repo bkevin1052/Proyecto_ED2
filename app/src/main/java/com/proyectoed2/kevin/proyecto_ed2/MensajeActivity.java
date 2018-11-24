@@ -120,7 +120,7 @@ public class MensajeActivity extends AppCompatActivity{
             }
         } else {
 
-            showMessage("Error de conexion !");
+            //showMessage("Error de conexion !");
         }
         isFinished = true;
     }
