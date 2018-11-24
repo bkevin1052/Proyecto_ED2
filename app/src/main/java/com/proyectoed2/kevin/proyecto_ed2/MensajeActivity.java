@@ -106,7 +106,7 @@ public class MensajeActivity extends AppCompatActivity{
             CrearMensaje(mensaje_saliente);
 
             try {
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             }
             catch(Exception e)
                     {}
