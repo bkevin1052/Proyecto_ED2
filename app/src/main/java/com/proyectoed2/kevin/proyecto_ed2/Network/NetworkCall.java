@@ -8,6 +8,7 @@ import com.proyectoed2.kevin.proyecto_ed2.Modelos.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -16,6 +17,8 @@ import retrofit2.http.HTTP;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import rx.Observable;
 
 public interface NetworkCall {
@@ -37,8 +40,8 @@ public interface NetworkCall {
     @GET("chats/get/allchats/{userName}")
     Observable<List<Chat>> obtenerChats(@Path("userName")String userName);//Ya implementado
 
-    @HTTP(method = "GET", path = "/chats/get/allmessages", hasBody = true)
-    Observable<List<Chat>> obtenerMensajes(@Body Chat chat);//No implementado
+    @GET("chats/get/allmessages")
+    Observable<Chat> obtenerMensajes(@Query("array") List<String> array);//No implementado
 
     @PUT("chats/put/{userName}")
     Observable<Usuario> agregarMensajesChats(@Path("userName,Receptor") String userName,@Body Usuario user);//No implementado
