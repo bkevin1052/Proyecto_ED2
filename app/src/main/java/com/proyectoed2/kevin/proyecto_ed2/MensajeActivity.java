@@ -77,7 +77,7 @@ public class MensajeActivity extends AppCompatActivity{
             Toast.makeText(getApplicationContext(),"Seleccione un archivo",Toast.LENGTH_SHORT).show();
         });
 
-        obtenerMensajes(chat.getContacto1(),chat.getContacto2());
+        obtenerMensajes(chat);
         //adapterMensajes.setOnClickListener(view ->{
             //PARA SELECCIONAR CUALQUIER MENSAJE EN EL RECYCLER VIEW
         //});
@@ -89,8 +89,8 @@ public class MensajeActivity extends AppCompatActivity{
     /**
      * Metodo para obtener contactos
      */
-    private void obtenerMensajes(String username, String receptor) {
-        mSubscriptions.add(BackendClient.getRetrofit().obtenerMensajes(username, receptor)
+    private void obtenerMensajes(Chat chat) {
+        mSubscriptions.add(BackendClient.getRetrofit().obtenerMensajes(chat)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse2,this::handleError));

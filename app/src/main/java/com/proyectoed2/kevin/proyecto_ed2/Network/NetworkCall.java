@@ -12,6 +12,7 @@ import java.util.List;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -36,8 +37,8 @@ public interface NetworkCall {
     @GET("chats/get/allchats/{userName}")
     Observable<List<Chat>> obtenerChats(@Path("userName")String userName);//Ya implementado
 
-    @GET("chats/get/allmessages")
-    Observable<List<Chat>> obtenerMensajes(@Path("userName, receptor") String username, String receptor);//No implementado
+    @HTTP(method = "GET", path = "/chats/get/allmessages", hasBody = true)
+    Observable<List<Chat>> obtenerMensajes(@Body Chat chat);//No implementado
 
     @PUT("chats/put/{userName}")
     Observable<Usuario> agregarMensajesChats(@Path("userName,Receptor") String userName,@Body Usuario user);//No implementado
