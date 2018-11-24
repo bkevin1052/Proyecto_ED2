@@ -98,7 +98,7 @@ public class MensajeActivity extends AppCompatActivity{
             }
             mensaje_saliente.setMensaje(String.valueOf(mensaje));
             mensaje_saliente.setEmisor(mSharedPreferences.getString(Constants.USERNAME,null));
-            mensaje_saliente.setReceptor(SplashScreenActivity.receptor)
+            mensaje_saliente.setReceptor(SplashScreenActivity.receptor);
             mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             Token = mSharedPreferences.getString(Constants.TOKEN,"");
             userName = mSharedPreferences.getString(Constants.USERNAME,"");
