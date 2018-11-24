@@ -77,7 +77,10 @@ public class MensajeActivity extends AppCompatActivity{
             Toast.makeText(getApplicationContext(),"Seleccione un archivo",Toast.LENGTH_SHORT).show();
         });
 
-        obtenerMensajes(chat.getContacto1(),chat.getContacto2());
+        List<String> listaParametros = new ArrayList<>();
+        listaParametros.add(chat.getContacto1());
+        listaParametros.add(chat.getContacto2());
+        obtenerMensajes(listaParametros);
         //adapterMensajes.setOnClickListener(view ->{
             //PARA SELECCIONAR CUALQUIER MENSAJE EN EL RECYCLER VIEW
         //});
@@ -89,17 +92,17 @@ public class MensajeActivity extends AppCompatActivity{
     /**
      * Metodo para obtener contactos
      */
-    private void obtenerMensajes(String username, String receptor) {
-        mSubscriptions.add(BackendClient.getRetrofit().obtenerMensajes(username, receptor)
+    private void obtenerMensajes(List<String> listaParametros) {
+        mSubscriptions.add(BackendClient.getRetrofit().obtenerMensajes(listaParametros)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse2,this::handleError));
+                .subscribe(this::handleResponse3,this::handleError));
     }
 
-    private void handleResponse2(List<Chat> response) {
+    private void handleResponse3(Chat response) {
         listaMensajes.clear();
-        for(int i = 0; i < response.get(0).listaMensajes.size();i++){
-            listaMensajes.add(response.get(0).listaMensajes.get(i));
+        for(int i = 0; i < response.listaMensajes.size();i++){
+            listaMensajes.add(response.listaMensajes.get(i));
         }
         nuevoChat.listaMensajes = listaMensajes;
         RecyclerMensajes.setLayoutManager(new LinearLayoutManager(this));
