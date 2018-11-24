@@ -44,7 +44,7 @@ public class ChatActivity extends AppCompatActivity implements OnFABMenuSelected
 
     private String Token;
     private String userName;
-
+    public static String receptor;
 
     RecyclerView RecyclerChats;
     ArrayList<Chat> listaChats = new ArrayList<>();
@@ -161,9 +161,13 @@ public class ChatActivity extends AppCompatActivity implements OnFABMenuSelected
         RecyclerChats.setAdapter(chatAdapter);
         mProgressbar.setVisibility(View.INVISIBLE);
 
-
-
         chatAdapter.setOnClickListener(view ->{
+            Chat chat = listaChats.get(RecyclerChats.getChildAdapterPosition(view));//Obtiene la posicion del usuario
+
+            if(SplashScreenActivity.usuario.compareTo(chat.getContacto1())==0)
+                receptor = chat.getContacto2();
+            else
+                receptor = chat.getContacto1();
             startActivity(new Intent(getApplicationContext(),MensajeActivity.class));
         });
     }

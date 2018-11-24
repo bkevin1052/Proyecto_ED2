@@ -43,6 +43,7 @@ public class ListaContactosActivity extends AppCompatActivity {
     ContactosAdapter adapterContactos= null;
     private ProgressBar mProgressbar;
 
+
     ArrayList<Usuario> listaContactos = new ArrayList<>();
 
     @Override

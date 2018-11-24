@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Chat;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Usuario;
 import com.proyectoed2.kevin.proyecto_ed2.R;
+import com.proyectoed2.kevin.proyecto_ed2.SplashScreenActivity;
 
 import java.util.ArrayList;
 
@@ -41,7 +42,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ListaChatViewH
     public void onBindViewHolder(@NonNull ListaChatViewHolder holder, int position) {
 
         Chat seleccion = data.get(position);
-        holder.textViewNombre.setText(seleccion.getContacto1());
+        if(SplashScreenActivity.usuario.compareTo(seleccion.getContacto1())==0)
+            holder.textViewNombre.setText(seleccion.getContacto2());
+        else
+            holder.textViewNombre.setText(seleccion.getContacto1());
     }
 
     @Override

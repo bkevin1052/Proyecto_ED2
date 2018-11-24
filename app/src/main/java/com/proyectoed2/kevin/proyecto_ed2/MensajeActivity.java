@@ -44,10 +44,13 @@ public class MensajeActivity extends AppCompatActivity{
     Mensaje mensaje_saliente;
     Chat nuevoChat = new Chat();
     MessageInput nuevoMensaje;
+    boolean isFinished;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mensaje);
+        isFinished = false;
+        mSubscriptions = new CompositeSubscription();
         init();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         RecyclerlistaMensajes.setLayoutManager(new LinearLayoutManager(this));
@@ -57,10 +60,13 @@ public class MensajeActivity extends AppCompatActivity{
             mensaje_saliente = new Mensaje();
             mensaje_saliente.setMensaje(String.valueOf(mensaje));
             mensaje_saliente.setEmisor(mSharedPreferences.getString(Constants.USERNAME,null));
+            mensaje_saliente.setReceptor(ChatActivity.receptor);
             CrearMensaje(mensaje_saliente);
-            nuevoChat.listaMensajes.add(mensaje_saliente);
-            adapterMensajes = new MensajesAdapter(this,nuevoChat.listaMensajes);
-            RecyclerlistaMensajes.setAdapter(adapterMensajes);
+            try {
+                Thread.sleep(2000);
+            }
+            catch(Exception e)
+                    {}
             return true;
         });
 
@@ -116,13 +122,15 @@ public class MensajeActivity extends AppCompatActivity{
 
             showMessage("Error de conexion !");
         }
-
+        isFinished = true;
     }
 
     private void handleResponse2(Response response ) {
         nuevoChat.listaMensajes.add(mensaje_saliente);
         adapterMensajes = new MensajesAdapter(this,nuevoChat.listaMensajes);
         RecyclerlistaMensajes.setAdapter(adapterMensajes);
+        isFinished = true;
+
     }
 
     private void showMessage(String message) {

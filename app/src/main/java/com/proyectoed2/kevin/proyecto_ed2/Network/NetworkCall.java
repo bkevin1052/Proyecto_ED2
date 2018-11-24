@@ -42,6 +42,6 @@ public interface NetworkCall {
     @POST("chats/nuevochat/create")
     Observable<Response>  crearchat(@Body Chat chat);//Ya implementado
 
-    @POST("chats/mensaje/agregarmensaje")
+    @PUT("chats/mensaje/agregarmensaje")
     Observable<Response> crearmensaje(@Body Mensaje mensaje);//Ya implementado
 }
