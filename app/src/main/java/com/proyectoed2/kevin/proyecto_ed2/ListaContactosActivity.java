@@ -2,6 +2,8 @@ package com.proyectoed2.kevin.proyecto_ed2;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,6 +44,7 @@ public class ListaContactosActivity extends AppCompatActivity {
     RecyclerView RecyclerlistaContactos;
     ContactosAdapter adapterContactos= null;
     private ProgressBar mProgressbar;
+    String Token,userName;
 
 
     ArrayList<Usuario> listaContactos = new ArrayList<>();
@@ -51,6 +54,55 @@ public class ListaContactosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_contactos);
         init();
+    }
+
+    /**
+     * Metodo que permite cargar el perfil del usuario
+     */
+    private void loadProfile() {
+
+        mSubscriptions.add(BackendClient.getRetrofit(Token).obtenerUsuario(userName)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseToken,this::handleErrorToken));
+    }
+
+    /**
+     * Metodo que permite manejar la respuesta
+     */
+    private void handleResponseToken(Usuario user) {
+        Toast.makeText(getApplicationContext(),"Tu sesion aun es valida :D".toUpperCase(),Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Metodo que permite manejar el error
+     */
+    private void handleErrorToken(Throwable error) {
+
+        if (error instanceof HttpException) {
+
+            Gson gson = new GsonBuilder().create();
+
+            try {
+
+                String errorBody = ((HttpException) error).response().errorBody().string();
+                Response response = gson.fromJson(errorBody,Response.class);
+                showMessage(response.getMessage());
+                new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), LoginActivity.class)), 3000);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+
+            try {
+                new Handler().postDelayed(() -> startActivity(new Intent(getApplicationContext(), LoginActivity.class)), 3000);
+            }
+            catch(Exception e)
+            {
+                showMessage("Error de conexion!");
+            }
+        }
     }
 
     private void init(){
@@ -176,6 +228,10 @@ public class ListaContactosActivity extends AppCompatActivity {
 
 
         adapterContactos.setOnClickListener(view ->{
+            mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            Token = mSharedPreferences.getString(Constants.TOKEN,"");
+            userName = mSharedPreferences.getString(Constants.USERNAME,"");
+            loadProfile();
             Usuario nombre = listaContactos.get(RecyclerlistaContactos.getChildAdapterPosition(view));//Obtiene la posicion del usuario
             Chat nuevo_chat = new Chat();
             nuevo_chat.setContacto1(SplashScreenActivity.usuario);
