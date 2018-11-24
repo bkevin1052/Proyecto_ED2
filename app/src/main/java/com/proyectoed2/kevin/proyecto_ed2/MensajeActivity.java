@@ -1,35 +1,29 @@
 package com.proyectoed2.kevin.proyecto_ed2;
 
 import android.content.SharedPreferences;
-import android.os.Message;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Response;
 
-import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
-import com.hlab.fabrevealmenu.view.FABRevealMenu;
 import com.proyectoed2.kevin.proyecto_ed2.Adaptadores.MensajesAdapter;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Chat;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Mensaje;
 import com.proyectoed2.kevin.proyecto_ed2.Network.BackendClient;
-import com.proyectoed2.kevin.proyecto_ed2.Network.NetworkCall;
 import com.proyectoed2.kevin.proyecto_ed2.utils.Constants;
 import com.stfalcon.chatkit.messages.MessageInput;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -45,6 +39,8 @@ public class MensajeActivity extends AppCompatActivity{
     Chat nuevoChat = new Chat();
     MessageInput nuevoMensaje;
     boolean isFinished;
+    RecyclerView RecyclerMensajes;
+    ArrayList<Mensaje> listaMensajes = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +58,7 @@ public class MensajeActivity extends AppCompatActivity{
             mensaje_saliente.setEmisor(mSharedPreferences.getString(Constants.USERNAME,null));
             mensaje_saliente.setReceptor(ChatActivity.receptor);
             CrearMensaje(mensaje_saliente);
+
             try {
                 Thread.sleep(2000);
             }
@@ -69,7 +66,10 @@ public class MensajeActivity extends AppCompatActivity{
                     {}
             return true;
         });
-
+        Chat chat = new Chat();
+        chat.setContacto1(SplashScreenActivity.usuario);
+        chat.setContacto2(ChatActivity.receptor);
+        chat.setLlave("");
 
 
         nuevoMensaje.setAttachmentsListener(() -> {
@@ -77,12 +77,34 @@ public class MensajeActivity extends AppCompatActivity{
             Toast.makeText(getApplicationContext(),"Seleccione un archivo",Toast.LENGTH_SHORT).show();
         });
 
+        obtenerMensajes(chat.getContacto1(),chat.getContacto2());
         //adapterMensajes.setOnClickListener(view ->{
             //PARA SELECCIONAR CUALQUIER MENSAJE EN EL RECYCLER VIEW
         //});
 
 
         //Acciones
+    }
+
+    /**
+     * Metodo para obtener contactos
+     */
+    private void obtenerMensajes(String username, String receptor) {
+        mSubscriptions.add(BackendClient.getRetrofit().obtenerMensajes(username, receptor)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse2,this::handleError));
+    }
+
+    private void handleResponse2(List<Chat> response) {
+        listaMensajes.clear();
+        for(int i = 0; i < response.get(0).listaMensajes.size();i++){
+            listaMensajes.add(response.get(0).listaMensajes.get(i));
+        }
+        nuevoChat.listaMensajes = listaMensajes;
+        RecyclerMensajes.setLayoutManager(new LinearLayoutManager(this));
+        adapterMensajes = new MensajesAdapter(this, listaMensajes);
+        RecyclerMensajes.setAdapter(adapterMensajes);
     }
 
     /**

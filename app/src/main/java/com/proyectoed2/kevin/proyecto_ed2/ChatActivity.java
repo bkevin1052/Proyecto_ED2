@@ -59,7 +59,7 @@ public class ChatActivity extends AppCompatActivity implements OnFABMenuSelected
 
         //Acciones con los chats "CHAT ADAPTER SET ON CLICK LISTERNER"
 
-        //chatAdapter.setOnClickListener(view->{
+        //adapterMensajes.setOnClickListener(view->{
             //PARA SELECCIONAR CUALQUIER CHAT EN EL RECYCLER VIEW
        //});
 
