@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -41,6 +43,7 @@ public class MensajeActivity extends AppCompatActivity{
     boolean isFinished;
     RecyclerView RecyclerMensajes;
     ArrayList<Mensaje> listaMensajes = new ArrayList<>();
+    List<String> listaParametros = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +80,7 @@ public class MensajeActivity extends AppCompatActivity{
             Toast.makeText(getApplicationContext(),"Seleccione un archivo",Toast.LENGTH_SHORT).show();
         });
 
-        List<String> listaParametros = new ArrayList<>();
+
         listaParametros.add(chat.getContacto1());
         listaParametros.add(chat.getContacto2());
         obtenerMensajes(listaParametros);
@@ -89,6 +92,21 @@ public class MensajeActivity extends AppCompatActivity{
         //Acciones
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_mensaje,menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.settings:
+                //obtenerMensajes(listaParametros);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     /**
      * Metodo para obtener contactos
      */
@@ -99,15 +117,15 @@ public class MensajeActivity extends AppCompatActivity{
                 .subscribe(this::handleResponse3,this::handleError));
     }
 
-    private void handleResponse3(Chat response) {
+    private void handleResponse3(List<Chat> response) {
         listaMensajes.clear();
-        for(int i = 0; i < response.listaMensajes.size();i++){
-            listaMensajes.add(response.listaMensajes.get(i));
+        for(int i = 0; i < response.get(0).listaMensajes.size();i++){
+            listaMensajes.add(response.get(0).listaMensajes.get(i));
         }
         nuevoChat.listaMensajes = listaMensajes;
-        RecyclerMensajes.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerlistaMensajes.setLayoutManager(new LinearLayoutManager(this));
         adapterMensajes = new MensajesAdapter(this, listaMensajes);
-        RecyclerMensajes.setAdapter(adapterMensajes);
+        RecyclerlistaMensajes.setAdapter(adapterMensajes);
     }
 
     /**
