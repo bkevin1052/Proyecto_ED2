@@ -94,7 +94,7 @@ public class ListaContactosActivity extends AppCompatActivity {
         mSubscriptions.add(BackendClient.getRetrofit().crearchat(chat)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse2,this::handleError));
+                .subscribe(this::handleResponse2,this::handleError2));
     }
 
     private void handleResponse2(Response response) {
@@ -121,6 +121,34 @@ public class ListaContactosActivity extends AppCompatActivity {
                 String errorBody = ((HttpException) error).response().errorBody().string();
                 Response response = gson.fromJson(errorBody,Response.class);
                 showMessage(response.getMessage());
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+
+            showMessage("Error de conexion !");
+        }
+    }
+
+    /**
+     * Metodo que permite manejar el error
+     */
+    private void handleError2(Throwable error) {
+
+        mProgressbar.setVisibility(View.INVISIBLE);
+        if (error instanceof HttpException) {
+
+            Gson gson = new GsonBuilder().create();
+
+            try {
+
+                String errorBody = ((HttpException) error).response().errorBody().string();
+                Response response = gson.fromJson(errorBody,Response.class);
+                showMessage(response.getMessage());
+                startActivity(new Intent(getApplicationContext(),MensajeActivity.class));
+
 
             } catch (IOException e) {
                 e.printStackTrace();
