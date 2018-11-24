@@ -272,6 +272,7 @@ public class MensajeActivity extends AppCompatActivity{
         }
         nuevoChat.listaMensajes = listaMensajes;
         llave = response.get(0).getLlave();
+        adapterMensajes.llave = response.get(0).getLlave();
         RecyclerlistaMensajes.setLayoutManager(new LinearLayoutManager(this));
         adapterMensajes = new MensajesAdapter(this, listaMensajes);
         RecyclerlistaMensajes.setAdapter(adapterMensajes);
