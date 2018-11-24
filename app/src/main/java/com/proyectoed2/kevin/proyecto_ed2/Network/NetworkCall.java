@@ -2,6 +2,7 @@ package com.proyectoed2.kevin.proyecto_ed2.Network;
 
 
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Chat;
+import com.proyectoed2.kevin.proyecto_ed2.Modelos.Mensaje;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Response;
 import com.proyectoed2.kevin.proyecto_ed2.Modelos.Usuario;
 
@@ -40,4 +41,7 @@ public interface NetworkCall {
 
     @POST("chats/nuevochat/create")
     Observable<Response>  crearchat(@Body Chat chat);//Ya implementado
+
+    @POST("chats/mensaje/agregarmensaje")
+    Observable<Response> crearmensaje(@Body Mensaje mensaje);//Ya implementado
 }

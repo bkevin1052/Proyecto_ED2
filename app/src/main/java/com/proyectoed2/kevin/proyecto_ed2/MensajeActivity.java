@@ -11,6 +11,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.proyectoed2.kevin.proyecto_ed2.Modelos.Response;
+
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener;
 import com.hlab.fabrevealmenu.view.FABRevealMenu;
 import com.proyectoed2.kevin.proyecto_ed2.Adaptadores.MensajesAdapter;
@@ -22,9 +26,11 @@ import com.proyectoed2.kevin.proyecto_ed2.utils.Constants;
 import com.stfalcon.chatkit.messages.MessageInput;
 
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
+import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -35,6 +41,7 @@ public class MensajeActivity extends AppCompatActivity{
     private CompositeSubscription mSubscriptions;
     RecyclerView RecyclerlistaMensajes;
     MensajesAdapter adapterMensajes;
+    Mensaje mensaje_saliente;
     Chat nuevoChat = new Chat();
     MessageInput nuevoMensaje;
     @Override
@@ -47,12 +54,10 @@ public class MensajeActivity extends AppCompatActivity{
 
         //ENVIO DE MENSAJES
         nuevoMensaje.setInputListener(mensaje -> {
-            Mensaje mensaje_saliente = new Mensaje();
+            mensaje_saliente = new Mensaje();
             mensaje_saliente.setMensaje(String.valueOf(mensaje));
             mensaje_saliente.setEmisor(mSharedPreferences.getString(Constants.USERNAME,null));
-
-
-
+            CrearMensaje(mensaje_saliente);
             nuevoChat.listaMensajes.add(mensaje_saliente);
             adapterMensajes = new MensajesAdapter(this,nuevoChat.listaMensajes);
             RecyclerlistaMensajes.setAdapter(adapterMensajes);
@@ -85,18 +90,42 @@ public class MensajeActivity extends AppCompatActivity{
     /**
      * Metodo para crear mensajes
      */
-//    private void CrearMensaje(Chat chat) {
-//        mSubscriptions.add(BackendClient.getRetrofit().crearchat(chat)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe(this::handleResponse2,this::handleError));
-//    }
+    private void CrearMensaje(Mensaje mensaje) {
+        mSubscriptions.add(BackendClient.getRetrofit().crearmensaje(mensaje)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse2,this::handleError));
+    }
 
-    private void handleError(Throwable throwable) {
+    private void handleError(Throwable error) {
+
+        if (error instanceof HttpException) {
+
+            Gson gson = new GsonBuilder().create();
+
+            try {
+
+                String errorBody = ((HttpException) error).response().errorBody().string();
+                Response response = gson.fromJson(errorBody,Response.class);
+                showMessage(response.getMessage());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+
+            showMessage("Error de conexion !");
+        }
 
     }
 
-    private void handleResponse2(Response response) {
+    private void handleResponse2(Response response ) {
+        nuevoChat.listaMensajes.add(mensaje_saliente);
+        adapterMensajes = new MensajesAdapter(this,nuevoChat.listaMensajes);
+        RecyclerlistaMensajes.setAdapter(adapterMensajes);
+    }
 
+    private void showMessage(String message) {
+        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
     }
 }
