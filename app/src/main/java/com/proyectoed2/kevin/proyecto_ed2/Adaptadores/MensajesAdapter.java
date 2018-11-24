@@ -55,7 +55,7 @@ public class MensajesAdapter extends RecyclerView.Adapter<MensajesAdapter.ListaM
         StringBuilder nuevoMensaje = new StringBuilder();
         nuevoMensaje.append(mensaje.getEmisor());
         nuevoMensaje.append(System.lineSeparator());
-        nuevoMensaje.append(mensaje.getMensaje());
+
         String contraseniaCifrada = "";
         char[] caracter = mensaje.getMensaje().toCharArray();
         SDES sdesDescifrado;
@@ -73,7 +73,8 @@ public class MensajesAdapter extends RecyclerView.Adapter<MensajesAdapter.ListaM
         {
             String error = e.getMessage();
         }
-        holder.textViewMensaje.setText(contraseniaCifrada);
+        nuevoMensaje.append(contraseniaCifrada);
+        holder.textViewMensaje.setText(nuevoMensaje.toString());
 
     }
 

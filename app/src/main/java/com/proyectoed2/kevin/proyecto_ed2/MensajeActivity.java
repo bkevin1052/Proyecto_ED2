@@ -199,7 +199,7 @@ public class MensajeActivity extends AppCompatActivity{
                 Token = mSharedPreferences.getString(Constants.TOKEN,"");
                 userName = mSharedPreferences.getString(Constants.USERNAME,"");
                 loadProfile();
-                //obtenerMensajes(listaParametros);
+                obtenerMensajes(listaParametros);
                 return true;
         }
         return super.onOptionsItemSelected(item);
