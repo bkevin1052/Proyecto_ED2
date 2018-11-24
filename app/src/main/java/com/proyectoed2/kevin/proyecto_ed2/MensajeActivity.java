@@ -69,6 +69,7 @@ public class MensajeActivity extends AppCompatActivity{
         IP = new int[8];
         EP = new int[8];
         P4 = new int[4];
+        lecturaPermutaciones();
         isFinished = false;
         mSubscriptions = new CompositeSubscription();
         init();
@@ -78,9 +79,8 @@ public class MensajeActivity extends AppCompatActivity{
         //ENVIO DE MENSAJES
         nuevoMensaje.setInputListener(mensaje -> {
             mensaje_saliente = new Mensaje();
-            lecturaPermutaciones();
-            String contraseniaCifrada = "";
 
+            String contraseniaCifrada = "";
             char[] caracter = String.valueOf(mensaje).toCharArray();
             SDES sdesCifrado;
 
@@ -96,7 +96,7 @@ public class MensajeActivity extends AppCompatActivity{
             {
                 String error = e.getMessage();
             }
-            mensaje_saliente.setMensaje(String.valueOf(mensaje));
+            mensaje_saliente.setMensaje(contraseniaCifrada);
             mensaje_saliente.setEmisor(mSharedPreferences.getString(Constants.USERNAME,null));
             mensaje_saliente.setReceptor(SplashScreenActivity.receptor);
             mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -106,7 +106,7 @@ public class MensajeActivity extends AppCompatActivity{
             CrearMensaje(mensaje_saliente);
 
             try {
-                Thread.sleep(600);
+                Thread.sleep(2000);
             }
             catch(Exception e)
                     {}
